@@ -29,4 +29,3 @@ Read `docs/architecture.md` and `docs/data-contract.md` first. The order below m
 
 Everything a refresh needs must end up in the adapter and builder. If a step still needs someone to decide
 something each time (which rows to keep, how to name a group), write that decision as a rule in the script.
-Use no real names, figures or other organization data in code, comments, docs or examples: the repository is public.

@@ -43,11 +43,13 @@ A page whose data file is missing is built in its empty state.
 
 ## Rules
 
-- **This repository is public: code only.** No organization data, names, photos, figures or branding is
-  committed. `data/*.json`, `assets/people/`, `assets/brand/`, `site/` and `sources/` are ignored by git
-  and supplied locally. Never force-add them, never paste their contents into code, tests, docs, commit
-  messages or examples. Before every commit, check `git status` for anything from those places.
+- **Push everything unless the owner says "do not push".** Data, photos, the emblem, source files and the
+  built pages are all committed and pushed. The owner decides what is sensitive and will say so item by
+  item; do not withhold, strip or ignore anything on your own judgment, and do not ask again each time.
+  When the owner names something as "do not push", add it to the DO NOT PUSH block in `.gitignore`,
+  remove it from git if it is already tracked, and say so. The owner knows the repository is public.
 - **Edit page code in `templates/`, never in `site/`.** `site/` is overwritten by every build.
+  Commit `site/` after building, so a fresh clone opens without running anything.
 - **Never hand-edit a data block.** Change `data/` (or the adapter) and run the build.
 - **Only real data in pages.** Never invent figures. A section without a source shows an empty state
   that says what will appear. Statuses on the front page: Live, Data ready, Needs data.

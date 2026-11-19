@@ -16,7 +16,8 @@ description: Load a new data export into the portal and rebuild the pages. Use w
 4. `python3 -m engine build` (deterministic: it only moves figures from `data/` into the templates)
 5. Open `site/index.html` (screenshot it with Playwright if no browser is to hand) and confirm the
    headline figures changed and nothing overflows. Check light and dark.
-6. Do not commit anything from `sources/`, `data/`, `assets/` or `site/`: the repository is public and holds code only.
+6. Commit the source, the data file and the rebuilt `site/` together, unless the owner has marked any of
+   them "do not push" (see the DO NOT PUSH block in `.gitignore`).
    If the pages are published as artifacts: `python3 -m engine artifact`, then publish each file in
    `.artifacts/` to the address in `portal.config.json`, passing it as `url`.
 7. Report: the period now covered, the headline figures before and after, and anything odd from step 3.

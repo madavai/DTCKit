@@ -1,0 +1,352 @@
+{
+  "title": "Digital Technology Centers Leadership Team",
+  "footer": "Property of Schneider Electric",
+  "people": {
+    "sreenivasa": {
+      "name": "Sreenivasa Reddy",
+      "photo": "sreenivasa-reddy.jpg"
+    },
+    "amit": {
+      "name": "Amit Paranjape",
+      "photo": "amit-paranjape.jpg",
+      "country": "IN"
+    },
+    "sandhya": {
+      "name": "Sandhya L",
+      "photo": "sandhya-l.jpg"
+    },
+    "tristan": {
+      "name": "Tristan Solanet",
+      "photo": "tristan-solanet.jpg",
+      "country": "ES"
+    },
+    "chaith": {
+      "name": "Chaithrodaya Sukruth",
+      "photo": "chaithrodaya-sukruth.jpg",
+      "country": "US"
+    },
+    "sayantan": {
+      "name": "Sayantan Nandi",
+      "photo": "sayantan-nandi.jpg",
+      "country": "IN"
+    },
+    "puneet": {
+      "name": "Puneet Naresh",
+      "photo": "puneet-naresh.jpg",
+      "country": "IN"
+    },
+    "marc": {
+      "name": "Marc Coroler",
+      "photo": "marc-coroler.jpg"
+    },
+    "zuhtu": {
+      "name": "Zuhtu Asik",
+      "photo": "zuhtu-asik.jpg"
+    },
+    "lena": {
+      "name": "Lena Henry",
+      "photo": "lena-henry.jpg"
+    },
+    "brian": {
+      "name": "Brian Brink",
+      "photo": "brian-brink.jpg"
+    },
+    "vincent": {
+      "name": "Vincent Lamarche",
+      "photo": "vincent-lamarche.jpg"
+    },
+    "axel": {
+      "name": "Axel Tismer",
+      "photo": "axel-tismer.jpg"
+    },
+    "yao": {
+      "name": "Yao Fei",
+      "photo": "yao-fei.jpg"
+    },
+    "arun": {
+      "name": "Arun Serikar",
+      "photo": "arun-serikar.jpg"
+    },
+    "robert": {
+      "name": "Robert Auffray",
+      "photo": "robert-auffray.jpg"
+    },
+    "nabil": {
+      "name": "Nabil El Abed",
+      "photo": "nabil-el-abed.jpg"
+    },
+    "jeffry": {
+      "name": "Jeffry Lamoreaux",
+      "photo": "jeffry-lamoreaux.jpg"
+    },
+    "heather": {
+      "name": "Heather Wims",
+      "photo": "heather-wims.jpg"
+    },
+    "angela": {
+      "name": "Angela Tade",
+      "photo": "angela-tade.jpg"
+    },
+    "pradeep": {
+      "name": "Pradeep Nair",
+      "photo": "pradeep-nair.jpg"
+    },
+    "sudheendra": {
+      "name": "Sudheendra Nyamati",
+      "photo": "sudheendra-nyamati.jpg",
+      "country": "IN"
+    },
+    "anamika": {
+      "name": "Anamika",
+      "photo": "anamika.jpg",
+      "country": "IN"
+    },
+    "pratul": {
+      "name": "Pratul Jindal",
+      "photo": "pratul-jindal.jpg",
+      "country": "IN"
+    },
+    "varun": {
+      "name": "Varun Khanna",
+      "photo": "varun-khanna.jpg",
+      "country": "IN"
+    },
+    "vishal": {
+      "name": "Vishal Vaid",
+      "photo": "vishal-vaid.jpg",
+      "country": "IN"
+    },
+    "rakhi": {
+      "name": "Rakhi K",
+      "photo": "rakhi-k.jpg",
+      "country": "IN"
+    },
+    "ashish": {
+      "name": "Ashish Bakshi",
+      "photo": "ashish-bakshi.jpg",
+      "country": "IN"
+    },
+    "divya": {
+      "name": "M Divya",
+      "photo": "m-divya.jpg",
+      "country": "IN"
+    },
+    "sandeep": {
+      "name": "Sandeep Kurup",
+      "photo": "sandeep-kurup.jpg",
+      "country": "IN"
+    },
+    "sapna": {
+      "name": "Sapna Rao",
+      "photo": "sapna-rao.jpg",
+      "country": "IN"
+    },
+    "vanitha": {
+      "name": "Vanitha Parthasarthy",
+      "photo": "vanitha-parthasarthy.jpg",
+      "country": "IN"
+    }
+  },
+  "head": {
+    "person": "sreenivasa",
+    "role": "SVP Digital Technology Centers"
+  },
+  "staff": [
+    {
+      "person": "amit",
+      "role": "Chief Of Staff"
+    },
+    {
+      "person": "sandhya",
+      "role": "Executive Assistant"
+    }
+  ],
+  "hubLeaders": [
+    {
+      "hub": "Barcelona",
+      "person": "tristan"
+    },
+    {
+      "hub": "US & Mexico",
+      "person": "chaith"
+    }
+  ],
+  "cioRelationship": [
+    {
+      "region": "NAM",
+      "person": "chaith"
+    },
+    {
+      "region": "Intl. Ops.",
+      "person": "amit"
+    },
+    {
+      "region": "Europe",
+      "person": "sayantan"
+    },
+    {
+      "region": "China & EAJ",
+      "person": "puneet"
+    }
+  ],
+  "pairLabel": "Power Couple",
+  "domainLeaders": [
+    {
+      "span": 3
+    },
+    {
+      "person": "marc"
+    },
+    {
+      "person": "zuhtu"
+    },
+    {
+      "person": "lena"
+    },
+    {
+      "person": "brian"
+    },
+    {
+      "person": "vincent"
+    },
+    {
+      "person": "axel"
+    },
+    {
+      "person": "yao"
+    },
+    {
+      "person": "arun"
+    }
+  ],
+  "digitalLeaders": [
+    {
+      "person": "robert",
+      "span": 3
+    },
+    {
+      "person": "robert",
+      "span": 2
+    },
+    {
+      "person": "nabil"
+    },
+    {
+      "person": "jeffry"
+    },
+    {
+      "person": "robert"
+    },
+    {
+      "person": "heather"
+    },
+    {
+      "person": "angela"
+    },
+    {
+      "person": "pradeep"
+    }
+  ],
+  "coes": [
+    {
+      "name": "ERP CoE",
+      "span": 3,
+      "leader": "sudheendra"
+    },
+    {
+      "name": "UNIFY",
+      "leader": "sudheendra"
+    },
+    {
+      "name": "Finance",
+      "leader": "anamika"
+    },
+    {
+      "name": "DCR",
+      "leader": "pratul"
+    },
+    {
+      "name": "Titan & DevOps",
+      "leader": "varun"
+    },
+    {
+      "name": "GSC",
+      "leader": "vishal"
+    },
+    {
+      "name": "Digital M&A",
+      "leader": "rakhi"
+    },
+    {
+      "name": "Digital Governance",
+      "leader": "ashish"
+    },
+    {
+      "name": "HR & People Analytics",
+      "leader": "puneet"
+    }
+  ],
+  "erpCoes": [
+    {
+      "name": "Global ERPs & ERP Data Factory",
+      "leader": "divya"
+    },
+    {
+      "name": "Eur. FERPs, SAP RIB, UNIFY RUN & SAP BI/BW",
+      "leader": "sayantan"
+    },
+    {
+      "name": "UNIFY Deployment",
+      "leader": "sandeep"
+    },
+    {
+      "name": "NAM ERP",
+      "leader": "chaith"
+    },
+    {
+      "name": "Oracle ERP",
+      "leader": "vishal"
+    },
+    {
+      "name": "SAP ABAP",
+      "leader": "sapna"
+    }
+  ],
+  "platformLabel": "Platform / Transversal CoEs",
+  "platformCoes": [
+    {
+      "names": [
+        "Access Mgt. & Security"
+      ],
+      "leader": "vanitha"
+    },
+    {
+      "names": [
+        "Delivery Assurance",
+        "Transformation"
+      ],
+      "leader": "amit"
+    },
+    {
+      "names": [
+        "Business Intelligence",
+        "Custom Apps",
+        "Enterprise Integration"
+      ],
+      "leader": "ashish"
+    },
+    {
+      "names": [
+        "AI & Automation"
+      ],
+      "leader": "rakhi"
+    },
+    {
+      "names": [
+        "Digital Adoption"
+      ],
+      "leader": "tristan"
+    }
+  ],
+  "updated": "2026-11-19T00:00:00Z"
+}

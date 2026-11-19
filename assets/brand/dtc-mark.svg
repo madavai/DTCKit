@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2520" height="2520" viewBox="-1260 -1260 2520 2520" role="img" aria-label="Digital Technology Centres: Barcelona, Bangalore, Monterrey, Nashville">
+  <style>
+  .spin { transform-box: view-box; transform-origin: 0 0;
+               animation: 5s cubic-bezier(.455,.03,.515,.955) infinite alternate; }
+  .ring-outer  { animation-name: dtc-rot-90n; }
+  .ring-3      { animation-name: dtc-rot-360; }
+  .ring-2      { animation-name: dtc-rot-360n; }
+  .ring-1,
+  .ring-green  { animation-name: dtc-rot-180; }
+  .cities      { animation: dtc-rot-360 40s linear infinite; }
+  @keyframes dtc-rot-90n  { to { transform: rotate(-90deg); } }
+  @keyframes dtc-rot-180  { to { transform: rotate(180deg); } }
+  @keyframes dtc-rot-360  { to { transform: rotate(360deg); } }
+  @keyframes dtc-rot-360n { to { transform: rotate(-360deg); } }
+  text { font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif; font-weight: 700; }
+  </style>
+  <defs>
+    <filter id="dtc-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#000" flood-opacity=".4"/>
+    </filter>
+    <filter id="dtc-shadow-light" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <filter id="dtc-text-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#000" flood-opacity=".4"/>
+    </filter>
+    <linearGradient id="dtc-green" gradientUnits="userSpaceOnUse" x1="-713" y1="0" x2="713" y2="0">
+      <stop offset="0" stop-color="#01B152"/>
+      <stop offset=".35" stop-color="#34D843"/>
+      <stop offset=".5" stop-color="#66FF33"/>
+      <stop offset=".65" stop-color="#34D843"/>
+      <stop offset="1" stop-color="#01B152"/>
+    </linearGradient>
+    <path id="dtc-city-path" d="M0 -522A522 522 0 1 1 0 522A522 522 0 1 1 0 -522"/>
+  </defs>
+
+  <!-- Outer dashed double ring -->
+  <g class="spin ring-outer" fill="none" stroke="#3CCD58" stroke-width="19">
+    <circle r="1166" pathLength="100" stroke-dasharray="2.2 .74"/>
+    <circle r="1204" pathLength="100" stroke-dasharray="2.2 .74"/>
+  </g>
+
+  <!-- Inner Circle 3 (starts rotated 90deg) -->
+  <g transform="rotate(90)"><path class="spin ring-3" fill="#3CCD59" filter="url(#dtc-shadow-light)" d="M0 -1109.1C612.5 -1109.1 1109.1 -612.5 1109.1 0C1109.1 612.5 612.5 1109.1 0 1109.1L-18.9 1108.1L-18.9 1017.7L0 1018.6C562.6 1018.6 1018.6 562.6 1018.6 0C1018.6 -562.6 562.6 -1018.6 0 -1018.6C-562.6 -1018.6 -1018.6 -562.6 -1018.6 0L-1018.5 1.9L-1109 1.9L-1109.1 0C-1109.1 -612.5 -612.5 -1109.1 0 -1109.1Z"/></g>
+
+  <!-- Inner Circle 2 (starts rotated 270deg) -->
+  <g transform="rotate(270)"><path class="spin ring-2" fill="#3DCD57" filter="url(#dtc-shadow)" d="M0 -968.8C535 -968.8 968.8 -535 968.8 0C968.8 535 535 968.8 0 968.8L-16.5 967.9L-16.5 888.9L0 889.7C491.4 889.7 889.7 491.4 889.7 0C889.7 -491.4 491.4 -889.7 0 -889.7C-491.4 -889.7 -889.7 -491.4 -889.7 0L-889.6 1.6L-968.7 1.6L-968.8 0C-968.8 -535 -535 -968.8 0 -968.8Z"/></g>
+
+  <!-- Inner Circle 1 -->
+  <path class="spin ring-1" fill="#3CCD59" filter="url(#dtc-shadow)" d="M770.5 25.8L819.2 25.8L816.3 83.9C776.9 471.8 467.3 779.8 78.7 816.8L25.8 819.3L25.8 770.6L74 768.3C439.6 733.5 730.7 443.8 767.8 78.9ZM-819.2 25.8L-770.5 25.8L-767.8 78.9C-730.7 443.8 -439.6 733.5 -74 768.3L-25.8 770.6L-25.8 819.3L-78.7 816.8C-467.3 779.8 -776.9 471.8 -816.3 83.9ZM-25.8 -819.3L-25.8 -770.6L-74 -768.3C-439.6 -733.5 -730.7 -443.8 -767.8 -78.9L-770.5 -25.8L-819.2 -25.8L-816.3 -83.9C-776.9 -471.8 -467.3 -779.8 -78.7 -816.8ZM25.8 -819.3L78.7 -816.8C467.3 -779.8 776.9 -471.8 816.3 -83.9L819.2 -25.8L770.5 -25.8L767.8 -78.9C730.7 -443.8 439.6 -733.5 74 -768.3L25.8 -770.6Z"/>
+
+  <!-- Green gradient ring -->
+  <path class="spin ring-green" fill="url(#dtc-green)" fill-rule="evenodd" filter="url(#dtc-shadow)" d="M0 -406.8C-224.7 -406.8 -406.8 -224.7 -406.8 0C-406.8 224.7 -224.7 406.8 0 406.8C224.7 406.8 406.8 224.7 406.8 0C406.8 -224.7 224.7 -406.8 0 -406.8ZM0 -712.8C393.7 -712.8 712.8 -393.7 712.8 0C712.8 393.7 393.7 712.8 0 712.8C-393.7 712.8 -712.8 393.7 -712.8 0C-712.8 -393.7 -393.7 -712.8 0 -712.8Z"/>
+
+  <!-- City names + tick marks (slow continuous spin) -->
+  <g class="cities">
+    <g fill="#1B5A2A" fill-opacity=".8">
+      <rect x="-7.3" y="-614" width="14.7" height="110" rx="7.3"/>
+      <rect x="-7.3" y="504" width="14.7" height="110" rx="7.3"/>
+      <rect x="-614" y="-7.3" width="110" height="14.7" rx="7.3"/>
+      <rect x="504" y="-7.3" width="110" height="14.7" rx="7.3"/>
+    </g>
+    <text fill="#1B5A2A" font-size="92" letter-spacing="7" text-anchor="middle">
+      <textPath href="#dtc-city-path" startOffset="410">MONTERREY</textPath>
+      <textPath href="#dtc-city-path" startOffset="1230">NASHVILLE</textPath>
+      <textPath href="#dtc-city-path" startOffset="2050">BARCELONA</textPath>
+      <textPath href="#dtc-city-path" startOffset="2870">BANGALORE</textPath>
+    </text>
+  </g>
+
+  <!-- Centre title -->
+  <g>
+    <text fill="var(--dtc-title, #008F00)" font-size="140" text-anchor="middle" dominant-baseline="central" filter="url(#dtc-text-shadow)">
+      <tspan x="0" y="-168">Digital</tspan>
+      <tspan x="0" y="0">Technology</tspan>
+      <tspan x="0" y="168">Centres</tspan>
+    </text>
+  </g>
+</svg>

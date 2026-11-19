@@ -89,8 +89,8 @@ Likely connectors per section, to confirm with the owners of each tool:
 - **No model in the loop.** Ingest and build are deterministic scripts. They can run from a terminal, a
   scheduled job or CI with nobody watching. Wording on pages that depends on the data ("up 74% on Jan")
   is assembled by the page code from the figures, never written by hand or by a model.
-- **Code and data are kept apart.** Templates and scripts are committed; sources, data, photos and built
-  pages are supplied locally. The code can be public while the organization's data stays private.
+- **Code and data are kept apart.** Templates and scripts never contain data; sources, data, photos and
+  built pages live in their own folders. Any of them can be excluded from the repository without touching code.
 
 ## What a full engine adds, in order
 

@@ -8,25 +8,23 @@ install and no AI in the loop: the same source file always gives the same pages.
 
 ## What is in this repository
 
-Code only. The repository is public, so it holds no organization data, names, photos or figures.
-You supply those locally; git ignores them.
+Everything: the scripts, the page code, the sample data and the built pages. Clone it and open
+`site/index.html`.
 
 ```
 CLAUDE.md             how the project works, for Claude Code (and a good read for people too)
 .claude/              Claude Code settings and skills
 portal.config.json    the pages, and where each is published
+sources/              raw exports go here
 engine/
   ingest/             source -> data        (one adapter per kind of source)
   build/              template + data -> site (one builder per page)
-templates/            page code: one HTML file per page, with an empty data block
-docs/                 architecture and the data contract
-
-supplied locally, not committed:
-sources/              raw exports
 data/                 one normalized JSON file per section
 assets/people/        portrait photos
 assets/brand/         the emblem
-site/                 the built pages
+templates/            page code: one HTML file per page, with an empty data block
+site/                 the built pages: open these
+docs/                 architecture and the data contract
 ```
 
 ## Pages
@@ -41,7 +39,9 @@ site/                 the built pages
 
 ## Use it
 
-You need Python 3.8 or newer. No packages.
+Open `site/index.html` in a browser. Nothing to install, and it works offline.
+
+To rebuild from your own source files you need Python 3.8 or newer. No packages.
 
 1. Put your chargeback export in `sources/` and load it:
 
@@ -80,9 +80,8 @@ python3 -m engine status
 Open this folder in Claude Code. `CLAUDE.md` loads automatically. Claude Code changes the scripts and
 templates; it is not needed to produce pages.
 
-## Privacy
+## What is committed
 
-Photos, names, chargeback lines and figures are personal or internal data. Keep them in the ignored
-folders. The chargeback overview holds totals only and is the page to share widely; the line-detail
-page names people. If you make the repository private and want the data versioned, see the notes at
-the top of `.gitignore`.
+Everything is committed unless the owner has marked it "do not push". Those items are listed in the
+DO NOT PUSH block at the top of `.gitignore`. The chargeback overview holds totals only; the
+line-detail page and the leadership chart name people.

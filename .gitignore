@@ -1,19 +1,10 @@
-# This repository is public. It holds code only: no organization data, photos, figures or branding.
-# Everything in the first block is supplied locally and stays out of git. If the repository becomes
-# private and you want the data versioned, remove the lines in that block.
+# The owner's rule: everything in this project is committed and pushed, data and photos included,
+# unless the owner has said "do not push" for it. Nobody else decides what is sensitive.
+#
+# --- DO NOT PUSH (only items the owner has named go here) ---
+# (none so far)
 
-# --- organization data (never in a public repo)
-data/*.json
-assets/people/*
-assets/brand/*
-site/
-sources/*
-!data/README.md
-!assets/people/README.md
-!assets/brand/README.md
-!sources/README.md
-
-# --- copies prepared for publishing
+# --- generated copies for publishing as Claude artifacts
 .artifacts/
 
 # --- Claude Code, personal
