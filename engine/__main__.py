@@ -2,8 +2,8 @@
 
     python3 -m engine ingest chargeback <export>      a chargeback export (HTML page, JSON or CSV) -> data/chargeback.json
     python3 -m engine ingest leadership <page.html>   a leadership page edited in the browser      -> data/leadership.json
-    python3 -m engine build                           templates/ + data/ -> site/ (every page)
-    python3 -m engine artifact                        site/ -> .artifacts/ (copies for publishing as Claude artifacts)
+    python3 -m engine build                           templates/ + data/ -> site/index.html (the whole portal, one page)
+    python3 -m engine artifact                        -> .artifacts/ (the portal, prepared for publishing as a Claude artifact)
     python3 -m engine status                          what each data file holds and where it came from
 """
 import json
@@ -29,16 +29,8 @@ def main(argv):
             from .ingest import leadership
             return leadership.run(argv[2])
     elif argv[:1] == ["build"]:
-        from .build import chargeback, frontpage, leadership
-        from .paths import SITE
-        SITE.mkdir(exist_ok=True)
-        for b in (leadership, chargeback, frontpage):
-            try:
-                b.run()
-            except FileNotFoundError as e:       # no data for this page yet: publish its empty state
-                b.PAGE.write_text(b.TEMPLATE.read_text(encoding="utf-8"), encoding="utf-8")
-                print("Built site/%s without data (%s is missing)" % (b.PAGE.name, getattr(e, "filename", e)))
-        return
+        from .build import portal
+        return portal.run()
     elif argv[:1] == ["artifact"]:
         from .build import artifact
         return artifact.run()

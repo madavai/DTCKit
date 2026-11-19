@@ -33,7 +33,7 @@ Accepted sources: the stand-alone chargeback HTML page, a JSON file of the same 
 columns `period, chargeback, resource_ref_pid, competence_center, resource_type, employee_type,
 location, country, management_scope_3, project_name, charged_cost_center, vendor, total_hours, amount_base`.
 
-Feeds: `site/chargeback.html` (the whole page, filters included) and the front page (Chargeback,
+Feeds: the chargeback view (the whole view, filters included) and the front page (Chargeback,
 Projects and People doors and their previews).
 
 When the source is the stand-alone chargeback HTML page, the adapter also keeps that page as
@@ -54,7 +54,7 @@ When the source is the stand-alone chargeback HTML page, the adapter also keeps 
 | `labels`, `title`, `footer`, `pairLabel`, `platformLabel` | Text shown on the chart |
 | `updated` | ISO time of the last change |
 
-Feeds: `site/leadership.html`, and the Organization door on the front page.
+Feeds: the leadership view, and the Organization door on the front page.
 
 ## Planned
 

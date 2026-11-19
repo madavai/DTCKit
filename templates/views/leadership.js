@@ -1,238 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!--page-->
-<title>DTC Leadership Team</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<style id="lt-style">
-/* Layout: the leadership slide as a live grid. 11 columns (ERP CoE = 3, eight CoEs = 1 each), four labelled rows,
-   drawn at a fixed 1500px design width and scaled to fit the window, like a slide. Theme follows the chargeback page. */
-:root{
-  --acc:rgb(61,205,88);--acc-weak:rgba(61,205,88,.14);--acc-line:#3DCD58;--acc-ink:#3DCD58;--on-acc:#ffffff;
-  --bg:#ffffff;--panel:#fbfbfa;--panel-2:#f0f0ed;--line:rgba(62,55,42,.14);--line-firm:rgba(62,55,42,.24);
-  --tx:rgb(38,34,26);--tx1:rgb(66,61,51);--tx2:rgb(109,102,90);
-  --s2:#42B4E6;--tile:#ffffff;--on-s2:#ffffff;--ring:#ffffff;
-  --shadow:0 1px 0 rgba(255,255,255,.6) inset,0 6px 16px -10px rgba(40,30,10,.25);
-  --shadow-hover:0 2px 3px rgba(62,55,42,.06),0 10px 18px -10px rgba(62,55,42,.3);
-  --glow:0 4px 18px rgba(61,205,88,.28);--ease:cubic-bezier(.33,.02,.2,1);
-  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
-  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-line:#3DCD58;--acc-ink:rgb(61,205,88);
-  --s2:#42B4E6;--tile:var(--panel);--ring:#151517;
-  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
-  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 12px 22px -12px rgba(0,0,0,.8);--glow:0 4px 18px rgba(61,205,88,.34);
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
-  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-line:#3DCD58;--acc-ink:rgb(61,205,88);
-  --s2:#42B4E6;--tile:var(--panel);--ring:#151517;
-  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
-  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 12px 22px -12px rgba(0,0,0,.8);--glow:0 4px 18px rgba(61,205,88,.34);
-  color-scheme:dark}
-:root[data-theme="light"]{color-scheme:light}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 var(--font);transition:background .35s,color .35s}
-.wrap{max-width:1560px;margin:0 auto;padding-block:20px 40px;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-bottom:14px}
-h1{margin:0;font-size:clamp(20px,2.6vw,32px);font-weight:300;color:var(--acc-ink);letter-spacing:-.01em;text-wrap:balance;flex:1 1 320px;min-width:0}
-.tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;color:var(--tx2);font-size:12.5px}
-.btn{font:inherit;color:var(--tx1);background:var(--panel);border:1px solid var(--line-firm);border-radius:999px;padding:6px 12px;cursor:pointer;
-  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.btn:disabled{opacity:.45;cursor:default}
-.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-hover)}
-:focus-visible{outline:2px solid var(--s2);outline-offset:2px}
-
-/* the slide */
-.fit{overflow-x:auto;overflow-y:hidden}
-.sizer{position:relative}
-.stage{width:1500px;transform-origin:0 0;padding:6px 10px 10px;font-size:12.5px}
-
-/* person pill */
-.p{font:inherit;position:relative;display:flex;align-items:center;gap:6px;width:100%;min-height:44px;margin:0;padding:3px 3px 3px 14px;
-  border-radius:999px;border:1.5px solid var(--acc-line);background:var(--panel);color:var(--tx);text-align:left;cursor:pointer;
-  box-shadow:var(--shadow);transition:transform .18s var(--ease),box-shadow .18s var(--ease),opacity .25s}
-.p:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
-.p .n{flex:1;min-width:0;font-weight:600;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere}
-.p .n small{display:block;font-size:11.5px;font-weight:500;color:var(--tx2);letter-spacing:0;margin-top:1px}
-.p .av{flex:none;width:38px;height:38px;border-radius:50%;overflow:hidden;background:var(--panel-2);box-shadow:0 0 0 2px var(--ring),0 2px 6px rgba(0,0,0,.3);
-  display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--tx2)}
-.p .av img{width:100%;height:100%;object-fit:cover;display:block}
-.p.left{flex-direction:row-reverse;padding:3px 14px 3px 3px}
-.p.left .n{text-align:right}
-.p.domain{background:var(--s2);border-color:transparent;color:var(--on-s2)}
-.p.digital{background:var(--acc);border-color:transparent;color:var(--on-acc)}
-.p.on{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--s2),var(--glow)}
-.stage.focus .p:not(.on){opacity:.32}
-.stage.focus .chip,.stage.focus .coe{opacity:.55}
-
-/* top band: hubs, head, CIO relationship */
-.crown{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center;margin-bottom:34px}
-.box{position:relative;border:1.5px solid var(--acc-line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;background:var(--panel)}
-.box.hubs{width:400px;padding-right:64px;justify-self:start;grid-template-columns:auto 1fr;align-items:center}
-.box.cio{width:390px;padding-left:64px;justify-self:end;grid-template-columns:1fr auto;align-items:center}
-.tab{position:absolute;top:50%;transform:translateY(-50%);background:var(--bg);border:1.5px solid var(--acc-line);border-radius:999px;
-  padding:8px 14px;font-weight:600;color:var(--tx1);text-align:center;line-height:1.2;box-shadow:var(--shadow)}
-.hubs .tab{right:-74px}.cio .tab{left:-84px;width:130px}
-.chip{background:var(--acc);color:var(--on-acc);border-radius:999px;padding:6px 12px;font-weight:600;text-align:center;white-space:nowrap;transition:opacity .25s}
-.head{display:grid;gap:12px;justify-items:center}
-.p.chief{width:440px;min-height:66px;padding:4px 22px 4px 4px;flex-direction:row-reverse;border-width:2px}
-.p.chief .av{width:62px;height:62px}
-.p.chief .n{text-align:center;font-size:21px;color:var(--acc-ink)}
-.p.chief .n small{font-size:14px;font-weight:600}
-.staff{display:flex;gap:10px}
-.staff .p{width:215px}
-
-/* the matrix */
-.matrix{position:relative;display:grid;grid-template-columns:86px repeat(11,minmax(0,1fr));gap:10px 8px;align-items:start}
-.band{grid-column:2/-1;grid-row:1/3;align-self:stretch;margin:-10px -8px;background:var(--panel-2);border:1px solid var(--line-firm);border-radius:8px;position:relative}
-.band .tag,.plat .tag{position:absolute;top:0;transform:translateY(-55%);background:var(--bg);border:1.5px solid var(--line-firm);border-radius:999px;
-  padding:5px 26px;font-weight:600;color:var(--tx2);box-shadow:var(--shadow)}
-.band .tag{left:100px}
-.rl{grid-column:1;align-self:center;position:relative;border-radius:999px;padding:6px 8px;text-align:center;font-weight:600;line-height:1.15;z-index:1}
-.rl.domain{background:var(--s2);color:var(--on-s2)}
-.rl.fill{background:var(--acc);color:var(--on-acc)}
-.rl.line{border:1.5px solid var(--acc-line);color:var(--tx1);background:var(--panel)}
-.rl.arrow::after{content:"";position:absolute;left:50%;top:calc(100% + 3px);width:1.5px;height:calc(var(--gap,14px));background:var(--tx2);opacity:.6}
-.cell{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:5px}
-.coe{display:grid;place-items:center;min-height:44px;padding:4px 6px;border-radius:4px;background:var(--acc);color:var(--on-acc);font-weight:600;
-  text-align:center;line-height:1.15;text-wrap:balance;transition:opacity .25s}
-.r3{margin-top:16px}
-.r5{margin-top:20px}
-.flag{justify-self:end;margin-right:8px;width:24px;height:15px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px var(--line-firm)}
-.flag svg{display:block;width:100%;height:100%}
-.dash{border:1.5px dashed var(--acc-line);border-radius:10px;align-self:stretch;pointer-events:none}
-.dash.erp{grid-column:2/5;grid-row:4/6;margin:-8px -6px}
-.dash.plat{grid-column:5/-1;grid-row:5;margin:20px -6px -8px;position:relative}
-.plat .tag{left:50%;transform:translate(-50%,-55%);background:var(--acc);color:var(--on-acc);border-color:transparent;font-size:14px;white-space:nowrap}
-.erpgrid{grid-column:2/5;grid-row:5;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 8px}
-.platgrid{grid-column:5/-1;grid-row:5;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px 8px;padding-top:44px}
-.lead-erp{padding-inline:64px}
-.matrix .p{padding-left:10px;gap:4px}
-.matrix .p .av{width:36px;height:36px}
-.p .n.tight{overflow-wrap:normal}
-
-/* who is selected */
-.who{margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow);padding:14px 18px;
-  display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;min-height:76px}
-.who .av{width:48px;height:48px;border-radius:50%;overflow:hidden;background:var(--panel-2);flex:none;display:grid;place-items:center;font-weight:700;color:var(--tx2)}
-.who .av img{width:100%;height:100%;object-fit:cover;display:block}
-.who h2{margin:0;font-size:17px;font-weight:600}
-.who .id{display:flex;align-items:center;gap:12px;min-width:0}
-.who .muted{color:var(--tx2);margin:0}
-.roles{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 300px;min-width:0;list-style:none;margin:0;padding:0}
-.roles li{border:1px solid var(--line-firm);border-radius:999px;padding:4px 10px;font-size:12.5px;color:var(--tx1);background:var(--bg)}
-.roles li b{color:var(--tx);font-weight:600}
-.foot{margin-top:14px;font-size:12px;color:var(--tx2)}
-
-/* edit mode */
-.btn.primary{background:var(--acc);color:var(--on-acc);border-color:transparent;font-weight:600}
-.status{font-size:12px;color:var(--tx2)}
-.p.empty{border-style:dashed;background:transparent;box-shadow:none;color:var(--tx2);justify-content:center;padding:3px 10px;font-weight:500}
-.p.sel{outline:2px dashed var(--s2);outline-offset:3px}
-.editing [contenteditable]{outline:1px dashed var(--line-firm);outline-offset:2px;cursor:text;min-width:24px}
-[contenteditable]:focus{outline:2px solid var(--s2)!important}
-h1 [contenteditable],.foot [contenteditable]{outline:1px dashed var(--line-firm);outline-offset:3px;display:inline-block;min-width:60px}
-.add{font:inherit;border:1.5px dashed var(--acc-line);background:transparent;color:var(--tx2);border-radius:999px;padding:6px 12px;cursor:pointer;align-self:start}
-.add:hover{color:var(--tx);background:var(--acc-weak)}
-.platgrid{position:relative}
-.platgrid .ptag{position:absolute;left:50%;top:20px;transform:translate(-50%,-55%);background:var(--acc);color:var(--on-acc);border:0;border-radius:999px;
-  padding:5px 26px;font-weight:600;font-size:14px;white-space:nowrap;z-index:2}
-.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 18px;width:100%}
-.f{display:grid;gap:4px;font-size:12px;color:var(--tx2);min-width:0}
-.f input,.f select{font:14px var(--font);color:var(--tx);background:var(--bg);border:1px solid var(--line-firm);border-radius:8px;padding:7px 9px;min-width:0;width:100%}
-.acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;width:100%}
-.acts .muted{flex:1 1 240px;font-size:12.5px}
-/* one tile size everywhere in the matrix: same width (the grid column), same height, same gaps */
-.matrix{--tile:46px;--gap:8px;column-gap:var(--gap)}
-.matrix .p,.matrix .coe{height:var(--tile);min-height:0}
-.matrix .coe{overflow:hidden;padding:3px 6px;line-height:1.12}
-.matrix .p .n{max-height:calc(var(--tile) - 8px);overflow:hidden}
-.matrix .cell{gap:var(--gap)}
-.matrix .cell.lead{grid-template-rows:var(--tile) 15px}
-.erpgrid .cell{grid-template-rows:var(--tile) var(--tile) 15px}
-.erpgrid{gap:14px var(--gap)}
-.platgrid{gap:var(--gap)}
-.flag{align-self:start}
-/* as on the original slide: white lettering on green, green names in outlined boxes, and shared outer edges */
-.p:not(.domain):not(.digital) .n{color:var(--acc-ink)}
-.coe,.chip,.rl.fill,.platgrid .ptag{text-shadow:0 1px 1px rgba(0,60,15,.35)}
-.coe{border-radius:2px}
-.crown{margin-left:86px;margin-right:-8px}
-.matrix .band{margin:-10px -8px}
-.dash.erp{margin:-8px -2px -8px -8px}
-.dash.plat{margin:20px -8px -8px -2px}
-.matrix .rl{align-self:start;height:var(--tile);display:grid;place-items:center;padding:2px 8px}
-.matrix .rl.arrow::after{top:calc(100% + 2px);height:var(--arrow,6px)}
-/* top section on the same tile system: every green chip and both side labels are one size, every photo one size */
-.crown{grid-template-columns:auto auto auto;justify-content:space-between;margin-left:100px}
-.chip,.tab{width:124px;height:46px;display:grid;place-items:center;padding:2px 8px;white-space:normal;line-height:1.15;border-radius:999px}
-.box.hubs{width:auto;padding:14px 76px 14px 16px;grid-template-columns:124px 200px;gap:8px}
-.box.cio{width:auto;padding:14px 16px 14px 76px;grid-template-columns:200px 124px;gap:8px}
-.hubs .tab{right:-62px;width:124px}.cio .tab{left:-62px;width:124px}
-.box .p,.staff .p{height:46px;min-height:0}
-.p.chief{width:400px}.staff{gap:8px}.staff .p{width:196px}
-.p .av,.matrix .p .av{width:38px;height:38px}
-.p.chief .av{width:62px;height:62px}
-.matrix{grid-template-columns:100px repeat(11,minmax(0,1fr))}
-.matrix .rl{margin-right:12px}
-.platgrid .ptag{top:0;min-width:300px;text-align:center;font-size:15px;padding:6px 28px}
-/* compact chips, no connector lines between row labels, air between the ERP CoE tile and its dashed box */
-.chip,.tab{height:34px}
-.matrix .rl.arrow::after{display:none}
-.matrix .cell.lead,.matrix .rl.line{margin-top:8px}
-.dash.erp{margin-top:0}
-/* strict rows: the ERP teams and the Platform CoEs share the same three lines (label, leader, flag); flags sit centred under the photo */
-.erpgrid{padding-top:44px}
-.matrix .rl,.matrix .cell,.matrix .coe,.matrix .p{box-sizing:border-box}
-.flag{margin-right:10px}
-.crown .box{align-items:center}
-.crown .chip,.crown .p{align-self:center}
-.platgrid .cell.lead{margin-top:0}
-.head{gap:21px;margin-bottom:41px}   /* SVP sits across the first two side rows, staff on the third */
-.p.chief{height:74px}
-.p:not(.domain):not(.digital):not(.empty){background:var(--tile)}
-.p.domain .n,.rl.domain{text-shadow:0 1px 1px rgba(0,50,90,.35)}
-.dash{border:2px dashed #3DCD58}
-h1{color:#3DCD58}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
-</style>
-<!--/page-->
-</head>
-<body>
-<!--page-->
-<div id="app"></div>
-<script type="application/json" id="lt-data">{}</script>
-<script id="lt-app">
-(function () {
-  var BASE = JSON.parse(document.getElementById("lt-data").textContent);
-  if (!BASE.people) { document.getElementById("app").textContent = "No data yet. Add data/leadership.json and run: python3 -m engine build"; return; }
+// The leadership chart, with Edit mode and PowerPoint export. Mounted by the shell into its own shadow root.
+PORTAL.view("leadership", function (root, ctx) {
+  var BASE = ctx.data("lt-data");
+  if (!BASE.people) { root.getElementById("app").textContent = "No data yet. Add data/leadership.json and run: python3 -m engine build"; return; }
   var D = JSON.parse(JSON.stringify(BASE));
   var HOSTED = !!(window.claude && window.claude.use);   // true inside a Claude artifact, false when opened as a file
   var DRAFT = "dtc-leadership-draft";
   var editing = false, slot = null, selected = null;
-  var db = null, downloads = null, lastWrite = "", PH = {};
+  var db = null, lastWrite = "", PH = {};
 
-  document.getElementById("app").innerHTML =
+  root.getElementById("app").innerHTML =
     '<div class="wrap"><div class="top"><h1 id="title"></h1><div class="tools">' +
     '<span class="status" id="status"></span>' +
     '<button class="btn" id="undo" type="button" hidden>Undo</button>' +
     '<button class="btn primary" id="commit" type="button" hidden>Save</button>' +
     '<button class="btn" id="cancel" type="button" hidden>Cancel</button>' +
     '<button class="btn primary" id="edit" type="button" hidden>Edit</button>' +
-    '<button class="btn" id="save" type="button" hidden>Download HTML</button>' +
-    '<button class="btn" id="ppt" type="button" hidden>Download PowerPoint</button>' +
-    '<button class="btn" id="theme" type="button">Switch theme</button></div></div>' +
+    '<button class="btn" id="ppt" type="button" hidden>Download PowerPoint</button></div></div>' +
     '<div class="fit" id="fit"><div class="sizer" id="sizer"><div class="stage" id="stage"></div></div></div>' +
     '<section class="who" id="who" aria-live="polite"></section><p class="foot" id="foot"></p></div>';
-  var stage = document.getElementById("stage"), who = document.getElementById("who"), statusEl = document.getElementById("status");
-  var editBtn = document.getElementById("edit"), saveBtn = document.getElementById("save"), pptBtn = document.getElementById("ppt");
-  var undoBtn = document.getElementById("undo"), commitBtn = document.getElementById("commit"), cancelBtn = document.getElementById("cancel");
-  var before = "", cur = "", undoStack = [], canEdit = false, canSave = false;
+  var stage = root.getElementById("stage"), who = root.getElementById("who"), statusEl = root.getElementById("status");
+  var editBtn = root.getElementById("edit"), pptBtn = root.getElementById("ppt");
+  var undoBtn = root.getElementById("undo"), commitBtn = root.getElementById("commit"), cancelBtn = root.getElementById("cancel");
+  var before = "", cur = "", undoStack = [], canEdit = false;
 
   if (!HOSTED) {
     try { var dr = JSON.parse(localStorage.getItem(DRAFT) || "null"); if (dr && dr.updated > (BASE.updated || "")) D = dr; } catch (e) {}
@@ -332,8 +121,8 @@ h1{color:#3DCD58}
     var L = D.labels;
     stage.textContent = "";
     stage.classList.toggle("editing", editing);
-    var h1 = document.getElementById("title"); h1.textContent = ""; h1.appendChild(lab("span", "", D, "title"));
-    var foot = document.getElementById("foot"); foot.textContent = "";
+    var h1 = root.getElementById("title"); h1.textContent = ""; h1.appendChild(lab("span", "", D, "title"));
+    var foot = root.getElementById("foot"); foot.textContent = "";
     if (D.footer || editing) { if (!D.footer) D.footer = ""; foot.appendChild(lab("span", "", D, "footer")); }
 
     // ---- top: hubs, head, CIO relationship
@@ -417,7 +206,7 @@ h1{color:#3DCD58}
     editBtn.hidden = editing || !canEdit;
     undoBtn.hidden = commitBtn.hidden = cancelBtn.hidden = !editing;
     undoBtn.disabled = !undoStack.length; commitBtn.disabled = !undoStack.length;
-    saveBtn.hidden = pptBtn.hidden = editing || !canSave;
+    pptBtn.hidden = editing;
     if (editing) panelEdit(); else select(selected && D.people[selected] ? selected : null);
     layout();
   }
@@ -596,31 +385,21 @@ h1{color:#3DCD58}
       }, function () {});
       return window.claude.use("user");
     }).then(function (u) { return u ? u.canEdit() : false; }).then(function (ok) { if (ok && db) { canEdit = true; render(); } }, function () {});
-    window.claude.use("downloads").then(function (x) { if (x) { downloads = x; canSave = true; render(); } }, function () {});
-  } else { canEdit = canSave = true; }
+  } else { canEdit = true; }
 
   editBtn.addEventListener("click", startEdit);
   undoBtn.addEventListener("click", undo);
   commitBtn.addEventListener("click", saveEdit);
   cancelBtn.addEventListener("click", cancelEdit);
 
-  // ---- one self-contained HTML file with the chart as it is now
-  function fileHtml() {
-    var json = JSON.stringify(D).replace(/</g, "\\u003c");
-    return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<!--page-->\n' +
-      '<title>DTC Leadership Team</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<style id="lt-style">' + document.getElementById("lt-style").textContent +
-      '</style>\n<!--/page-->\n</head>\n<body>\n<!--page-->\n<div id="app"></div>\n<script type="application/json" id="lt-data">' + json + '</' + 'script>\n<script id="lt-app">' +
-      document.getElementById("lt-app").textContent + '</' + 'script>\n<!--/page-->\n</body>\n</html>\n';
-  }
-  saveBtn.addEventListener("click", function () {
-    var html = fileHtml(), name = "dtc-leadership.html";
-    if (downloads) { downloads.save({ filename: name, data: html }).then(function () { status("Downloaded"); }, function () {}); return; }
-    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([html], { type: "text/html" })); a.download = name;
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
-  });
+  // "Download HTML" in the top bar saves the whole portal; it asks this view for the chart as last saved.
+  ctx.provide("lt-data", function () { return editing ? JSON.parse(before) : D; });
+
   document.addEventListener("keydown", function (e) {
+    if (!ctx.active()) return;                                   // another page of the portal is showing
+    var t = (e.composedPath && e.composedPath()[0]) || e.target;  // the real target, inside this view's shadow root
     if (e.key === "Escape") { if (editing) cancelEdit(); else select(null); }
-    else if (editing && (e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === "z" && !/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) && !e.target.isContentEditable) { e.preventDefault(); undo(); }
+    else if (editing && (e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === "z" && !/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName) && !t.isContentEditable) { e.preventDefault(); undo(); }
   });
 
   // ---- the chart as one PowerPoint slide: every box is a real, editable shape placed where it sits on screen
@@ -712,16 +491,14 @@ h1{color:#3DCD58}
     status("Building the slide…"); pptBtn.disabled = true;
     loadPptx().then(makeSlide).then(function (blob) {
       var name = "dtc-leadership.pptx";
-      if (downloads) return downloads.save({ filename: name, data: blob });
-      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
-      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+      return ctx.offer(name, blob, "application/vnd.openxmlformats-officedocument.presentationml.presentation");
     }).then(function () { status("PowerPoint downloaded"); }, function (e) {
       status(window.PptxGenJS ? (e && e.code ? "" : "Could not build the slide") : "PowerPoint export needs an internet connection");
     }).then(function () { pptBtn.disabled = false; });
   });
 
   // ---- fit the 1500px drawing to the window, like a slide
-  var fit = document.getElementById("fit"), sizer = document.getElementById("sizer");
+  var fit = root.getElementById("fit"), sizer = root.getElementById("sizer");
   function layout() {
     var s = Math.max(0.55, Math.min(1, fit.clientWidth / 1500));
     stage.style.transform = "scale(" + s + ")";
@@ -731,18 +508,6 @@ h1{color:#3DCD58}
   window.addEventListener("resize", layout);
   window.addEventListener("load", layout);
 
-  // ---- theme
-  var root = document.documentElement;
-  try { var saved = localStorage.getItem("portal-theme"); if (saved && !root.dataset.theme) root.dataset.theme = saved; } catch (e) {}
-  document.getElementById("theme").addEventListener("click", function () {
-    var dark = root.dataset.theme ? root.dataset.theme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    root.dataset.theme = dark ? "light" : "dark";
-    try { localStorage.setItem("portal-theme", root.dataset.theme); } catch (e) {}
-  });
-
   render();
-})();
-</script>
-<!--/page-->
-</body>
-</html>
+  return { show: render };      // drawn again when shown: sizes can only be measured while visible
+});

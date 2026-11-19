@@ -5,7 +5,7 @@ import re
 
 
 def _block(block_id):
-    return re.compile(r'(<script type="application/json" id="%s">)(.*?)(</script>)' % re.escape(block_id), re.S)
+    return re.compile(r'(<script type="application/json" id="%s"[^>]*>)(.*?)(</script>)' % re.escape(block_id), re.S)
 
 
 def read_block(html, block_id):

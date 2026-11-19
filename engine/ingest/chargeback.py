@@ -150,7 +150,7 @@ def build(meta, rows):
     }
 
 
-BACK_LINK = ('<a href="chargeback.html" style="position:fixed;left:12px;bottom:12px;z-index:80;padding:6px 12px;border-radius:999px;'
+BACK_LINK = ('<a href="index.html#chargeback" style="position:fixed;left:12px;bottom:12px;z-index:80;padding:6px 12px;border-radius:999px;'
              'border:1px solid var(--line);background:var(--panel);color:var(--tx1);font-size:12px;text-decoration:none;'
              'box-shadow:0 8px 20px -12px rgba(0,0,0,.6)">&larr; Chargeback overview</a>')
 

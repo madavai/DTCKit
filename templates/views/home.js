@@ -1,185 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!--page-->
-<title>DTC Portal</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<style id="fp-style">
-/* Layout: the spinning emblem and name top left, then five doors (Organization, Chargeback, Operational KPIs,
-   Projects, People). Each door shows its headline figure and opens a second level. Theme follows the chargeback page. */
-:root{
-  --acc:#3DCD58;--acc-weak:rgba(61,205,88,.14);--acc-line:rgba(61,205,88,.6);--acc-ink:rgb(22,128,46);--on-acc:#ffffff;
-  --bg:#ffffff;--panel:#fbfbfa;--panel-2:#f1f1ee;--line:rgba(62,55,42,.14);--line-firm:rgba(62,55,42,.24);
-  --tx:rgb(38,34,26);--tx1:rgb(66,61,51);--tx2:rgb(109,102,90);
-  --s2:rgb(42,120,214);--s2-weak:rgba(42,120,214,.12);--warn:rgb(176,112,0);--warn-weak:rgba(214,150,20,.14);
-  --dtc-title:#008F00;
-  --shadow:0 1px 0 rgba(255,255,255,.6) inset,0 6px 16px -10px rgba(40,30,10,.25);
-  --shadow-hover:0 2px 3px rgba(62,55,42,.06),0 14px 24px -12px rgba(62,55,42,.32);
-  --glow:0 4px 18px rgba(61,205,88,.28);--ease:cubic-bezier(.33,.02,.2,1);--radius:14px;
-  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
-  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-ink:#3DCD58;
-  --s2:rgb(57,135,229);--s2-weak:rgba(57,135,229,.16);--warn:rgb(240,180,60);--warn-weak:rgba(240,180,60,.14);--dtc-title:#B1EBBC;
-  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
-  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 16px 26px -12px rgba(0,0,0,.85);--glow:0 4px 18px rgba(61,205,88,.34);
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
-  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-ink:#3DCD58;
-  --s2:rgb(57,135,229);--s2-weak:rgba(57,135,229,.16);--warn:rgb(240,180,60);--warn-weak:rgba(240,180,60,.14);--dtc-title:#B1EBBC;
-  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
-  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 16px 26px -12px rgba(0,0,0,.85);--glow:0 4px 18px rgba(61,205,88,.34);
-  color-scheme:dark}
-:root[data-theme="light"]{color-scheme:light}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 var(--font);transition:background .35s,color .35s}
-.wrap{max-width:1320px;margin:0 auto;padding-block:18px 48px;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--s2);outline-offset:3px;border-radius:6px}
-.muted{color:var(--tx2)}
-.num{font-variant-numeric:tabular-nums}
-
-/* header: emblem, name, where you are, actions */
-.brand{display:flex;align-items:center;gap:14px 18px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
-.lockup{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
-.mark-box{width:92px;height:92px;flex:none;transition:width .3s var(--ease),height .3s var(--ease)}
-.inner .mark-box{width:60px;height:60px}
-.dtc-mark{display:block;width:100%;height:100%}
-.dtc-mark .spin{transform-box:view-box;transform-origin:0 0;animation:5s cubic-bezier(.455,.03,.515,.955) infinite alternate}
-.dtc-mark .ring-outer{animation-name:dtc-rot-90n}
-.dtc-mark .ring-3{animation-name:dtc-rot-360}
-.dtc-mark .ring-2{animation-name:dtc-rot-360n}
-.dtc-mark .ring-1,.dtc-mark .ring-green{animation-name:dtc-rot-180}
-.dtc-mark .cities{transform-box:view-box;transform-origin:0 0;animation:dtc-rot-360 40s linear infinite}
-.dtc-mark text{font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;font-weight:700}
-@keyframes dtc-rot-90n{to{transform:rotate(-90deg)}}
-@keyframes dtc-rot-180{to{transform:rotate(180deg)}}
-@keyframes dtc-rot-360{to{transform:rotate(360deg)}}
-@keyframes dtc-rot-360n{to{transform:rotate(-360deg)}}
-.name{color:var(--acc-ink);font-weight:600;font-size:13px;line-height:1.2}
-.name span{display:block}
-.divider{align-self:stretch;width:1px;background:var(--line);flex:none}
-.titles{flex:1 1 240px;min-width:0}
-h1{margin:0;font-size:clamp(20px,2.2vw,28px);font-weight:650;letter-spacing:-.015em;text-wrap:balance}
-h1 .acc{color:var(--acc-ink)}
-.sub{font-size:12.5px;color:var(--tx2)}
-.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{font:inherit;border:1px solid var(--line-firm);background:var(--panel);border-radius:999px;height:34px;padding:0 14px;cursor:pointer;
-  display:inline-flex;align-items:center;gap:6px;color:var(--tx1);box-shadow:var(--shadow);text-decoration:none;
-  transition:transform .14s var(--ease),box-shadow .22s var(--ease),border-color .14s,color .14s}
-.btn:hover{border-color:var(--acc-line);color:var(--acc-ink);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
-.icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-
-.note{border:1px dashed var(--line-firm);border-radius:10px;padding:8px 12px;color:var(--tx2);font-size:12.5px;margin-bottom:20px}
-.lead{font-size:clamp(16px,1.5vw,19px);color:var(--tx1);max-width:68ch;margin:0 0 22px;text-wrap:pretty}
-
-/* the five doors */
-.doors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
-.door{grid-column:span 2;display:flex;flex-direction:column;gap:12px;min-width:0;text-decoration:none;background:var(--panel);
-  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px 16px;
-  transition:transform .16s var(--ease),box-shadow .24s var(--ease),border-color .16s}
-.door.wide{grid-column:span 3}
-.door:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--acc-line)}
-.door:hover .go{color:var(--acc-ink)}.door:hover .go .icon{transform:translateX(4px)}
-.door-head{display:flex;align-items:center;gap:10px}
-.badge{width:36px;height:36px;border-radius:10px;background:var(--acc-weak);color:var(--acc-ink);display:grid;place-items:center;flex:none}
-.door h2{margin:0;font-size:18px;font-weight:650;letter-spacing:-.01em;flex:1;min-width:0}
-.ask{color:var(--tx2);margin:0;font-size:13.5px}
-.figure{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.figure b{font-size:clamp(30px,3.2vw,42px);font-weight:650;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
-.figure span{color:var(--tx2);font-size:13px}
-.door-body{display:grid;gap:12px;flex:1;align-content:start}
-.go{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--tx1);border-top:1px solid var(--line);padding-top:12px;transition:color .14s}
-.go .icon{transition:transform .2s var(--ease)}
-.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;white-space:nowrap;flex:none}
-.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.pill.live{background:var(--acc-weak);color:var(--acc-ink)}
-.pill.ready{background:var(--s2-weak);color:var(--s2)}
-.pill.need{background:var(--warn-weak);color:var(--warn)}
-.pill.need::before{border-radius:1px;transform:rotate(45deg)}
-.facts{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
-.facts li{border:1px solid var(--line-firm);border-radius:999px;padding:3px 10px;font-size:12.5px;color:var(--tx1);background:var(--bg)}
-.facts b{font-weight:650;color:var(--tx)}
-.faces{display:flex;align-items:center}
-.faces img,.faces .more{width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 2px var(--panel);margin-left:-8px;object-fit:cover;background:var(--panel-2)}
-.faces img:first-child{margin-left:0}
-.faces .more{display:grid;place-items:center;font-size:12px;font-weight:650;color:var(--tx2)}
-.todo{display:grid;gap:6px;list-style:none;margin:0;padding:0}
-.todo li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line-firm);padding:3px 0;color:var(--tx1);font-size:13px}
-.todo li span:last-child{color:var(--tx2)}
-
-/* charts: thin bars, rounded data ends, values in text ink */
-.cols{display:flex;align-items:flex-end;gap:4px;height:var(--h,72px)}
-.col{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px;position:relative}
-.col .bar{width:min(100%,26px);border-radius:4px 4px 0 0;background:var(--acc);opacity:.55;min-height:2px}
-.col .bar.b2{background:var(--s2);border-radius:0}
-.col .bar.top{border-radius:4px 4px 0 0}.col .bar.base{border-radius:0}
-.col.last .bar,.cols.full .col .bar{opacity:1}
-.col .v{font-size:11px;color:var(--tx1);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.2}
-.col:hover .bar,.col:focus-visible .bar{opacity:1}
-.axis{display:flex;gap:4px;border-top:1px solid var(--line-firm);padding-top:3px;margin-top:0}
-.axis span{flex:1;min-width:0;text-align:center;font-size:11px;color:var(--tx2);white-space:nowrap;overflow:hidden}
-.rows{display:grid;gap:7px}
-.row{display:grid;grid-template-columns:minmax(0,var(--lab,42%)) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
-.row .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx1)}
-.row .track{height:8px;border-radius:0 4px 4px 0;background:transparent;border-left:1px solid var(--line-firm)}
-.row .track i{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--acc);min-width:2px}
-.row .val{font-variant-numeric:tabular-nums;color:var(--tx);font-weight:600;min-width:52px;text-align:right}
-.split{display:flex;gap:2px;height:10px}
-.split i{display:block;height:100%;background:var(--acc);border-radius:4px 0 0 4px;min-width:3px}
-.split i+i{background:var(--s2);border-radius:0 4px 4px 0}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--tx1)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.legend i{width:10px;height:10px;border-radius:3px;background:var(--acc);display:inline-block}
-.legend i.b2{background:var(--s2)}
-.tip{position:fixed;z-index:50;pointer-events:none;background:var(--panel);border:1px solid var(--line-firm);border-radius:10px;padding:7px 10px;
-  box-shadow:0 18px 40px -20px rgba(0,0,0,.6);font-size:12.5px;max-width:260px}
-.tip b{display:block;font-weight:650}
-.foot{margin-top:22px;font-size:12px;color:var(--tx2);max-width:90ch}
-
-/* second level */
-.back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--tx2);font-weight:600;margin-bottom:14px}
-.back:hover{color:var(--acc-ink)}
-.sec-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-.sec-head h2{margin:0;font-size:clamp(22px,2.4vw,30px);font-weight:650;letter-spacing:-.02em}
-.sec-ask{font-size:16px;color:var(--tx1);margin:0 0 20px;max-width:70ch}
-h3{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--tx2);font-weight:650;margin:26px 0 10px}
-.inside{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.item{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel);text-decoration:none;min-width:0}
-a.item{box-shadow:var(--shadow);transition:transform .16s var(--ease),box-shadow .24s var(--ease),border-color .16s}
-a.item:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--acc-line)}
-.item.wait{border-style:dashed;background:transparent}
-.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.item b{font-size:15px;font-weight:650}
-.item p{margin:0;color:var(--tx2);font-size:13px}
-.item .open{color:var(--acc-ink);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:4px;margin-top:2px}
-.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
-.panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow);padding:16px 18px;min-width:0;display:grid;gap:12px;align-content:start}
-.panel h4{margin:0;font-size:15px;font-weight:650}
-.panel .cap{margin:-8px 0 0;color:var(--tx2);font-size:12.5px}
-.dl{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
-.dl li{border:1px solid var(--line-firm);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--tx1);display:flex;align-items:center;gap:8px}
-@media (max-width:1000px){.door,.door.wide{grid-column:span 3}}
-@media (max-width:640px){.door,.door.wide{grid-column:1/-1}.mark-box{width:64px;height:64px}.divider{display:none}}
-@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
-</style>
-<!--/page-->
-</head>
-<body>
-<!--page-->
-<div id="app"></div>
-<script type="application/json" id="fp-data">{}</script>
-<script id="fp-app">
-(function () {
-  var D = JSON.parse(document.getElementById("fp-data").textContent);
-  var app = document.getElementById("app");
+// The front page: five doors and their second level. Mounted by the shell into its own shadow root.
+PORTAL.view("home", function (root, ctx) {
+  var D = ctx.data("fp-data");
+  var app = root.getElementById("app");
   if (!D.chargeback) { app.textContent = "No data yet. Load a chargeback export with: python3 -m engine ingest chargeback <file>  then run: python3 -m engine build"; return; }
-  var HOSTED = !!(window.claude && window.claude.use), downloads = null;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   function h(tag, attrs, kids) {
@@ -214,7 +37,7 @@ a.item:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-co
   var hcLast = pp.headcount[pp.headcount.length - 1], hcNow = hcLast[0] + hcLast[1];
 
   // ---- one floating tooltip for every chart mark
-  var tip = h("div", { cls: "tip", hidden: "" }); document.body.appendChild(tip);
+  var tip = h("div", { cls: "tip", hidden: "" }); root.appendChild(tip);
   function tipOn(el, title, lines) {
     el.setAttribute("tabindex", "0");
     el.setAttribute("aria-label", title + ": " + lines.join(", "));
@@ -380,19 +203,9 @@ a.item:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-co
     var markBox = h("span", { cls: "mark-box" }); markBox.innerHTML = D.mark;       // the emblem ships inside this file's own data block
     var name = h("span", { cls: "name" }, (D.source.org || "Digital Technology Centers").split(" ").map(function (w) { return h("span", { text: w }); }));
     var title = h("h1", {}, sec ? ["Portal · ", h("span", { cls: "acc", text: sec.name })] : ["DTC ", h("span", { cls: "acc", text: "Portal" })]);
-    var save = h("button", { cls: "btn", type: "button", id: "save" }, [icon(["M12 4v11", "M7 10l5 5 5-5", "M5 20h14"]), "Download HTML"]);
-    save.hidden = HOSTED && !downloads;
-    save.addEventListener("click", saveFile);
-    var theme = h("button", { cls: "btn", type: "button", id: "theme" }, ["Switch theme"]);
-    theme.addEventListener("click", function () {
-      var root = document.documentElement, dark = root.dataset.theme ? root.dataset.theme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-      root.dataset.theme = dark ? "light" : "dark";
-      try { localStorage.setItem("portal-theme", root.dataset.theme); } catch (e) {}
-    });
     return h("header", { cls: "brand" + (sec ? " inner" : "") }, [h("a", { cls: "lockup", href: "#home", "aria-label": "Portal home" }, [markBox, name]),
       h("span", { cls: "divider", "aria-hidden": "true" }),
-      h("div", { cls: "titles" }, [title, h("div", { cls: "sub", text: "Figures to " + monYear(last) + " · prepared " + (D.source.generated || "") })]),
-      h("div", { cls: "actions" }, [save, theme])]);
+      h("div", { cls: "titles" }, [title, h("div", { cls: "sub", text: "Figures to " + monYear(last) + " · prepared " + (D.source.generated || "") })])]);
   }
   function home() {
     var doors = h("nav", { cls: "doors", "aria-label": "Sections" });
@@ -437,23 +250,5 @@ a.item:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-co
     window.scrollTo(0, 0);
   }
 
-  // ---- this page as one self-contained file
-  function saveFile() {
-    var html = '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<!--page-->\n' +
-      '<title>DTC Portal</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<style id="fp-style">' + document.getElementById("fp-style").textContent +
-      '</style>\n<!--/page-->\n</head>\n<body>\n<!--page-->\n<div id="app"></div>\n<script type="application/json" id="fp-data">' + JSON.stringify(D).replace(/</g, "\\u003c") +
-      '</' + 'script>\n<script id="fp-app">' + document.getElementById("fp-app").textContent + '</' + 'script>\n<!--/page-->\n</body>\n</html>\n';
-    if (downloads) { downloads.save({ filename: "dtc-portal.html", data: html }).catch(function () {}); return; }
-    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([html], { type: "text/html" })); a.download = "dtc-portal.html";
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
-  }
-  if (HOSTED) window.claude.use("downloads").then(function (x) { if (x) { downloads = x; var b = document.getElementById("save"); if (b) b.hidden = false; } }, function () {});
-
-  try { var saved = localStorage.getItem("portal-theme"); if (saved && !document.documentElement.dataset.theme) document.documentElement.dataset.theme = saved; } catch (e) {}
-  window.addEventListener("hashchange", render);
-  render();
-})();
-</script>
-<!--/page-->
-</body>
-</html>
+  return { show: render };      // the shell calls show() on every route that belongs to this view
+});

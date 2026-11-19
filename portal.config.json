@@ -6,14 +6,6 @@
       "artifactFile": "dtc-portal.html",
       "artifact": "https://claude.ai/artifact/4RB6Thu48QzR3THKMZe9uS",
       "capabilities": {
-        "downloads": true
-      }
-    },
-    "leadership": {
-      "file": "site/leadership.html",
-      "artifactFile": "dtc-leadership.html",
-      "artifact": "https://claude.ai/artifact/5mAdLe4Z85QJMRffvuDRtR",
-      "capabilities": {
         "db": {
           "rules": [
             {
@@ -31,14 +23,10 @@
         "user": {},
         "downloads": true
       }
-    },
-    "chargeback": {
-      "file": "site/chargeback.html",
-      "artifactFile": "dtc-chargeback.html",
-      "artifact": "https://claude.ai/artifact/MWJgXQX5F5THxYLaL5iZpn",
-      "capabilities": {
-        "downloads": true
-      }
     }
+  },
+  "retiredArtifacts": {
+    "leadership": "https://claude.ai/artifact/5mAdLe4Z85QJMRffvuDRtR",
+    "chargeback": "https://claude.ai/artifact/MWJgXQX5F5THxYLaL5iZpn"
   }
 }

@@ -21,11 +21,35 @@ next refresh runs without anyone, human or model, deciding anything.
 
 1. **Sources** (`sources/`, later connectors): raw exports as they come from a tool or a person.
 2. **Data** (`data/*.json`): one normalized file per section. This is the contract. See `docs/data-contract.md`.
-3. **Templates** (`templates/*.html`): the page code. One HTML file per page with an empty data block.
-4. **Site** (`site/*.html`): template + data, written by the build. This is what people open.
+3. **Templates** (`templates/`): the page code, in parts.
+   - `shell.html` lists the parts; `shell.css` and `shell.js` are the top bar, the router and the history.
+   - `views/*.js`: one script per view (`home`, `leadership`, `chargeback`).
+   - `styles/*.css`: the stylesheets the views use.
+4. **Site** (`site/index.html`): all parts + data in one file, written by the build. This is what people open.
 
-`engine/ingest/` turns a source into a data file. `engine/build/` puts data files into templates and
-writes `site/`. A page never reads a source, and an adapter never writes page code.
+`engine/ingest/` turns a source into a data file. `engine/build/portal.py` composes the parts, fills the data
+blocks and writes `site/index.html`. A view never reads a source, and an adapter never writes page code.
+
+## One page, many views
+
+The whole portal is a single page. The owner's rule: **clicking never opens a new tab or leaves the page**,
+and Back and Forward always work.
+
+- Every view is part of `site/index.html`. Moving between views only changes the `#name` in the address.
+  Links between views are `href="#name"`; never `target="_blank"`, never a link to another HTML file.
+- The shell (`templates/shell.js`) owns the bar on top: Back, Forward, the trail of where you are,
+  Download HTML and the theme switch. It keeps its own history of visited addresses so its buttons work
+  the same in a browser tab and inside a Claude artifact; the browser's own Back and Forward work too.
+- Each view mounts into its own shadow root, so one view's styles and ids cannot collide with another's.
+  A view is `PORTAL.view("name", function (root, ctx) { ... })`: look things up with `root.getElementById`,
+  never `document.getElementById`; append overlays to `root`, not `document.body`. In view stylesheets,
+  `:host` is the view (not `:root`), and the theme is read from `:host([data-theme="dark"])`.
+- `ctx` is what a view gets from the shell: `ctx.data(id)` (its data block), `ctx.offer(filename, data, type)`
+  (hand the viewer a file), `ctx.provide(id, fn)` (current data for Download HTML), `ctx.active()`.
+- A new view needs: a script in `views/`, a stylesheet in `styles/` (or reuse `portal.css`), its parts listed
+  in `shell.html`, a route in `ROUTES` and an entry in `VIEWS` in `shell.js`, and a data module in `engine/build/`.
+- The one exception is `site/chargeback-detail.html`, the owner's own stand-alone page. It is a separate file,
+  opened in the same tab, with a link back to the portal.
 
 ## Commands
 
@@ -33,8 +57,9 @@ writes `site/`. A page never reads a source, and an adapter never writes page co
 python3 -m engine ingest chargeback <export>      # chargeback export (HTML, JSON or CSV) -> data/chargeback.json
                                                   # an HTML export is also kept as site/chargeback-detail.html
 python3 -m engine ingest leadership <page.html>   # a leadership page edited in the browser -> data/leadership.json
-python3 -m engine build                           # templates/ + data/ -> site/
-python3 -m engine artifact                        # -> .artifacts/ (copies for publishing as Claude artifacts)
+python3 -m engine build                           # templates/ + data/ -> site/index.html (the whole portal)
+python3 -m engine artifact                        # -> .artifacts/ (the portal, prepared for publishing as a Claude artifact)
+node tools/check-served.js <file>                 # walk through a published or prepared copy (needs Playwright)
 python3 -m engine status                          # what each data file holds and where it came from
 ```
 
@@ -48,7 +73,7 @@ A page whose data file is missing is built in its empty state.
   item; do not withhold, strip or ignore anything on your own judgment, and do not ask again each time.
   When the owner names something as "do not push", add it to the DO NOT PUSH block in `.gitignore`,
   remove it from git if it is already tracked, and say so. The owner knows the repository is public.
-- **Edit page code in `templates/`, never in `site/`.** `site/` is overwritten by every build.
+- **Edit page code in `templates/`, never in `site/`.** `site/index.html` is overwritten by every build.
   Commit `site/` after building, so a fresh clone opens without running anything.
 - **Never hand-edit a data block.** Change `data/` (or the adapter) and run the build.
 - **Only real data in pages.** Never invent figures. A section without a source shows an empty state
@@ -57,14 +82,13 @@ A page whose data file is missing is built in its empty state.
   anything built from chargeback. Two pages name people, by the owner's decision: the leadership chart, and
   `site/chargeback-detail.html`, which is the owner's own stand-alone chargeback page copied as it is (one
   back link added). Do not publish the detail page as an artifact, or link it from one, unless asked.
-- **Pages stay self-contained.** One HTML file per page, data and photos inside, no network needed.
+- **The portal stays self-contained.** One HTML file, data and photos inside, no network needed.
   The only exception is the PowerPoint export, which loads PptxGenJS from jsDelivr on click.
-- **Keep the `<!--page-->` markers** in every template. The artifact step and the pages' own
-  "Download HTML" depend on them.
+- **Keep the `<!--page-->` markers** in `shell.html`. The artifact step and "Download HTML" depend on them.
 - **Look before you ship.** After changing a template, build, then open the page (or screenshot it with
   Playwright) in light and dark, and check the phone width.
 - **After publishing an artifact, load what was actually served.** Read the published `index.html` back and
-  open it in a browser with `window.claude` stubbed. Testing the file in `site/` is not enough: the artifact
+  run `node tools/check-served.js <that file>`: it opens it with `window.claude` stubbed and walks the views. Testing the file in `site/` is not enough: the artifact
   copy is a cut of that file, and a bad cut once published blank pages for a whole session without any error.
 
 ## Look and feel
@@ -79,12 +103,13 @@ Taken from the owner's existing chargeback page and leadership slide; do not dri
 
 ## Publishing as Claude artifacts
 
-`portal.config.json` lists each page's artifact address and the capabilities it declares.
-Run `python3 -m engine artifact`, then publish each file in `.artifacts/` to the address listed there
-(pass it as `url` so the link stays the same). In the artifact copies, links between pages point at
-the other artifacts; in `site/` they are relative file links.
+`portal.config.json` gives the portal's artifact address and the capabilities it declares.
+Run `python3 -m engine artifact`, then publish `.artifacts/dtc-portal.html` to that address (pass it as
+`url` so the link stays the same, and pass the capabilities). The artifact copy is the same page; it only
+leaves out the link to the line-detail file, which is not part of the artifact. `retiredArtifacts` lists the
+two earlier separate pages (leadership, chargeback); they are no longer updated.
 
-The leadership artifact stores edits made with its Edit button in the artifact's own database
+The portal artifact stores edits made with its Edit button in the artifact's own database
 (`leadership/current`, `photos/<id>`). Those override the embedded data when newer, so after changing
 `data/leadership.json` set a newer `updated` value or the page will keep showing the stored edits.
 

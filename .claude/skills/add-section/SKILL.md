@@ -15,15 +15,16 @@ Read `docs/architecture.md` and `docs/data-contract.md` first. The order below m
    Register it in `engine/__main__.py`. For a connector, the adapter fetches instead of reading a file;
    the connection goes in `.mcp.json` with secrets as `${ENV_VAR}`. Everything after the fetch is the same.
    Person-level rows do not go into `data/` unless the user has said who may see them.
-3. **Page.** Copy the structure of an existing page in `templates/`: `<!--page-->` markers, one
-   `<style id>`, one `<script type="application/json" id>` data block, one app script that renders from
-   the block. Keep the theme tokens and the look described in `CLAUDE.md`. Add a builder in
-   `engine/build/<page>.py` with `data()`, `render()` and `run()`, and add the page to
-   `portal.config.json`, `engine/build/artifact.py` and the `build` command.
-4. **Front page.** In `templates/index.html`, update that section's door: its headline figure, its status
-   (Needs data -> Data ready -> Live), and the `href` of the sub-page in its `inside` list.
-5. **Check.** `python3 -m engine build`, then look at the new page and the front page in light and dark,
-   at desktop and phone width. Charts follow the same rules as the existing ones: thin bars, rounded data
+3. **View.** The portal is one page; a section is a view inside it, never a separate HTML file and never a
+   link that opens a new tab. Follow "One page, many views" in `CLAUDE.md`:
+   add `templates/views/<name>.js` (copy the shape of `chargeback.js`), reuse `styles/portal.css` or add a
+   stylesheet, list the parts and a `<script type="application/json" id="<name>-data" data-part>` block in
+   `templates/shell.html`, add the route and trail to `ROUTES` and the view to `VIEWS` in `templates/shell.js`,
+   and add `engine/build/<name>.py` with `BLOCK`, `NEEDS` and `data()`, listed in `SECTIONS` in `engine/build/portal.py`.
+4. **Front page.** In `templates/views/home.js`, update that section's door: its headline figure, its status
+   (Needs data -> Data ready -> Live), and `href: "#<name>"` for the door or the item in its `inside` list.
+5. **Check.** `python3 -m engine build`, then look at the new view and the front page in light and dark,
+   at desktop and phone width, and click through with Back and Forward. Charts follow the same rules as the existing ones: thin bars, rounded data
    ends, values in text colour, a tooltip on every mark, a legend when there are two series.
 6. Update the table in `README.md`.
 

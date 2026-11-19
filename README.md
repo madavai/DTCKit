@@ -22,20 +22,26 @@ engine/
 data/                 one normalized JSON file per section
 assets/people/        portrait photos
 assets/brand/         the emblem
-templates/            page code: one HTML file per page, with an empty data block
-site/                 the built pages: open these
+templates/            page code: shell (bar, router), views/ and styles/
+site/                 the built portal: open index.html
+tools/                a script that walks through a built or published copy
 docs/                 architecture and the data contract
 ```
 
-## Pages
+## One page
 
-| Page | Template | State |
-|---|---|---|
-| Front page | `templates/index.html` | Five sections, each with a headline figure and a second level |
-| Leadership team | `templates/leadership.html` | Editable chart; downloads as HTML and PowerPoint |
-| Chargeback overview | `templates/chargeback.html` | KPIs, trend, what moved, heatmap, click-to-filter; totals only |
-| Chargeback line detail | none: the source page itself | Kept as `site/chargeback-detail.html` when the source is an HTML export |
-| Operational KPIs, Projects, People | not built yet | Outlined on the front page |
+The whole portal is one file, `site/index.html`. Clicking never opens a new tab: every view is part
+of the same page, with Back and Forward buttons and a trail of where you are in the bar on top.
+
+| View | Address | Code | State |
+|---|---|---|---|
+| Front page | `#home` | `templates/views/home.js` | Five sections, each with a headline figure and a second level |
+| Leadership team | `#leadership` | `templates/views/leadership.js` | Editable chart; PowerPoint download |
+| Chargeback overview | `#chargeback` | `templates/views/chargeback.js` | KPIs, trend, what moved, heatmap, click-to-filter; totals only |
+| Chargeback line detail | separate file | the source page itself | Kept as `site/chargeback-detail.html` when the source is an HTML export |
+| Operational KPIs, Projects, People | on the front page | not built yet | Outlined on the front page |
+
+Download HTML in the bar saves the whole portal as one file, with any saved edits inside.
 
 ## Use it
 
@@ -72,7 +78,7 @@ python3 -m engine status
 - **New figures:** run `ingest` then `build` again. Nothing else.
 - **Leadership changes:** use the Edit button on the page, press Save, then Download HTML and run
   `python3 -m engine ingest leadership <downloaded.html>`. Or edit `data/leadership.json` by hand.
-- **Page design or behaviour:** edit the file in `templates/`, then build. Never edit `site/`.
+- **Page design or behaviour:** edit the view or stylesheet in `templates/`, then build. Never edit `site/`.
 - **A new section or source:** see `docs/architecture.md` and `docs/data-contract.md`.
 
 ## Working with Claude Code

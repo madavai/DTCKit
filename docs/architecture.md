@@ -39,9 +39,9 @@ same `data/chargeback.json`. Swapping one for the other touches one adapter and 
 | `sources/` | Hold raw exports | Files placed by hand | Also an upload box, or skipped entirely by connectors |
 | `engine/ingest/` | Read one kind of source, validate it, aggregate it, write one data file | `chargeback` (file), `leadership` (edited page) | One adapter per source: file or connector |
 | `data/` | The normalized record per section | `chargeback.json`, `leadership.json` | One file per section and sub-page |
-| `templates/` | The page code, one file per page, with an empty data block | Front page, leadership chart, chargeback overview | One template per page |
-| `engine/build/` | Put data files into a template's data block and write the page | `frontpage`, `leadership`, `chargeback` | One builder per page |
-| `site/` | What people open | Front page, leadership chart, chargeback overview and line detail | Every section and sub-page |
+| `templates/` | The page code in parts: a shell (bar, router, history), one script per view, stylesheets | Views: front page, leadership chart, chargeback overview | One view per section and sub-page |
+| `engine/build/` | Compose the parts, fill each view's data block, write the page | `portal` (composer) with `frontpage`, `leadership`, `chargeback` data modules | One data module per view |
+| `site/` | What people open | `index.html`: the whole portal in one page; plus the chargeback line detail | Same file, more views |
 
 Every data file says where it came from in a `source` block (`kind`: `file`, `connector` or `manual`;
 `name`; `range`; `generated`). The pages show that as "Figures to ... · prepared ...", so a reader can
@@ -76,9 +76,11 @@ Likely connectors per section, to confirm with the owners of each tool:
 
 ## Design choices that keep the engine possible
 
-- **Self-contained pages.** A page is one file with its data inside. It can be mailed, opened offline,
-  published as an artifact or served from any platform. The engine's only output is that file.
-- **A data block per page.** Updating a page means replacing one JSON block. A script can do it
+- **One self-contained page.** The portal is one file with its data inside. It can be mailed, opened
+  offline, published as an artifact or served from any platform. The engine's only output is that file.
+- **Every view on the same page.** Moving around never opens a tab or loads another file; the bar on top
+  has Back and Forward. Each view is isolated in a shadow root, so views can be added without touching the others.
+- **A data block per view.** Updating a view means replacing one JSON block. A script can do it
   (`engine/pages.py`), and so can the page itself in the browser, which is how "Download HTML" works.
 - **Aggregation happens in the adapter.** Person-level and line-level rows stay in the source.
   Pages receive totals, so a page can be shared more widely than its source.

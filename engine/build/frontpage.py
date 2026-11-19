@@ -1,4 +1,4 @@
-"""Builder: data/chargeback.json + data/leadership.json + the emblem -> site/index.html (the front page).
+"""Data for the front page view: data/chargeback.json + data/leadership.json + the emblem.
 
 Only totals go in: nobody who charged time is named. Standard library only
 (portraits are made smaller when Pillow happens to be installed).
@@ -8,12 +8,10 @@ import io
 import json
 import re
 
-from ..pages import with_block
-from ..paths import ASSETS, DATA, SITE, TEMPLATES
+from ..paths import ASSETS, DATA
 
-TEMPLATE = TEMPLATES / "index.html"
-PAGE = SITE / "index.html"
 BLOCK = "fp-data"
+NEEDS = ("chargeback.json", "leadership.json")
 ROOT = ASSETS.parent
 
 
@@ -39,9 +37,8 @@ def mark():
     return re.sub(r">\s+<", "><", svg).strip()
 
 
-def data(links=None):
+def data(artifact=False):
     cb = json.loads((DATA / "chargeback.json").read_text(encoding="utf-8"))
-    leadership_url = (links or {}).get("leadership", "leadership.html")
     lt = json.loads((DATA / "leadership.json").read_text(encoding="utf-8"))
     dims, months = cb["dims"], cb["months"]
     col = {name: i for i, name in enumerate(cb["cols"])}      # read columns by name: the contract may grow
@@ -61,7 +58,7 @@ def data(links=None):
             faces.append(face(f))
     out = {
         "source": cb["source"],
-        "links": {"leadership": leadership_url, "chargeback": (links or {}).get("chargeback", "chargeback.html")},
+        "links": {"leadership": "#leadership", "chargeback": "#chargeback"},   # other views of the same page
         "mark": mark(),
         "org": {
             "leaders": len(lt["people"]),
@@ -94,13 +91,3 @@ def data(links=None):
         },
     }
     return out
-
-
-def render(links=None):
-    return with_block(TEMPLATE.read_text(encoding="utf-8"), BLOCK, data(links))
-
-
-def run():
-    SITE.mkdir(exist_ok=True)
-    PAGE.write_text(render(), encoding="utf-8")
-    print("Built site/%s (%d KB)" % (PAGE.name, PAGE.stat().st_size // 1024))

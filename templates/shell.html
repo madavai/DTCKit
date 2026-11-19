@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--page-->
+<title>DTC Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style id="shell-style">
+/*@include shell.css*/
+</style>
+<!--/page-->
+</head>
+<body>
+<!--page-->
+<div id="shell"></div>
+<script id="boot" data-part>window.PORTAL = { views: {}, view: function (name, mount) { this.views[name] = mount; } };</script>
+<script type="text/plain" id="css-portal" data-part>
+/*@include styles/portal.css*/
+</script>
+<script type="text/plain" id="css-leadership" data-part>
+/*@include styles/leadership.css*/
+</script>
+<script type="application/json" id="fp-data" data-part>{}</script>
+<script type="application/json" id="cb-data" data-part>{}</script>
+<script type="application/json" id="lt-data" data-part>{}</script>
+<script id="view-home" data-part>
+/*@include views/home.js*/
+</script>
+<script id="view-chargeback" data-part>
+/*@include views/chargeback.js*/
+</script>
+<script id="view-leadership" data-part>
+/*@include views/leadership.js*/
+</script>
+<script id="shell-app" data-part>
+/*@include shell.js*/
+</script>
+<!--/page-->
+</body>
+</html>

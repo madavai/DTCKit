@@ -1,16 +1,14 @@
-"""Builder: data/leadership.json + assets/people/ -> site/leadership.html (photos are embedded so the page is one file)."""
+"""Data for the leadership view: data/leadership.json with the photos from assets/people/ embedded."""
 import base64
 import json
 
-from ..pages import with_block
-from ..paths import ASSETS, DATA, SITE, TEMPLATES
+from ..paths import ASSETS, DATA
 
-TEMPLATE = TEMPLATES / "leadership.html"
-PAGE = SITE / "leadership.html"
 BLOCK = "lt-data"
+NEEDS = ("leadership.json",)
 
 
-def data():
+def data(artifact=False):
     d = json.loads((DATA / "leadership.json").read_text(encoding="utf-8"))
     for p in d["people"].values():
         ph = p.get("photo")
@@ -23,13 +21,3 @@ def data():
                 print("missing photo:", ph)
                 p["photo"] = ""
     return d
-
-
-def render(links=None):
-    return with_block(TEMPLATE.read_text(encoding="utf-8"), BLOCK, data())
-
-
-def run():
-    SITE.mkdir(exist_ok=True)
-    PAGE.write_text(render(), encoding="utf-8")
-    print("Built site/%s (%d KB)" % (PAGE.name, PAGE.stat().st_size // 1024))
