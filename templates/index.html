@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--page-->
+<title>DTC Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style id="fp-style">
+/* Layout: the spinning emblem and name top left, then five doors (Organization, Chargeback, Operational KPIs,
+   Projects, People). Each door shows its headline figure and opens a second level. Theme follows the chargeback page. */
+:root{
+  --acc:#3DCD58;--acc-weak:rgba(61,205,88,.14);--acc-line:rgba(61,205,88,.6);--acc-ink:rgb(22,128,46);--on-acc:#ffffff;
+  --bg:#ffffff;--panel:#fbfbfa;--panel-2:#f1f1ee;--line:rgba(62,55,42,.14);--line-firm:rgba(62,55,42,.24);
+  --tx:rgb(38,34,26);--tx1:rgb(66,61,51);--tx2:rgb(109,102,90);
+  --s2:rgb(42,120,214);--s2-weak:rgba(42,120,214,.12);--warn:rgb(176,112,0);--warn-weak:rgba(214,150,20,.14);
+  --dtc-title:#008F00;
+  --shadow:0 1px 0 rgba(255,255,255,.6) inset,0 6px 16px -10px rgba(40,30,10,.25);
+  --shadow-hover:0 2px 3px rgba(62,55,42,.06),0 14px 24px -12px rgba(62,55,42,.32);
+  --glow:0 4px 18px rgba(61,205,88,.28);--ease:cubic-bezier(.33,.02,.2,1);--radius:14px;
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
+  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-ink:#3DCD58;
+  --s2:rgb(57,135,229);--s2-weak:rgba(57,135,229,.16);--warn:rgb(240,180,60);--warn-weak:rgba(240,180,60,.14);--dtc-title:#B1EBBC;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
+  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 16px 26px -12px rgba(0,0,0,.85);--glow:0 4px 18px rgba(61,205,88,.34);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b0b0c;--panel:#151517;--panel-2:#1c1c1f;--line:rgba(233,228,220,.12);--line-firm:rgba(233,228,220,.2);
+  --tx:rgb(242,240,236);--tx1:rgb(216,210,199);--tx2:rgb(163,158,150);--acc-ink:#3DCD58;
+  --s2:rgb(57,135,229);--s2-weak:rgba(57,135,229,.16);--warn:rgb(240,180,60);--warn-weak:rgba(240,180,60,.14);--dtc-title:#B1EBBC;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -14px rgba(0,0,0,.9);
+  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.04),0 16px 26px -12px rgba(0,0,0,.85);--glow:0 4px 18px rgba(61,205,88,.34);
+  color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 var(--font);transition:background .35s,color .35s}
+.wrap{max-width:1320px;margin:0 auto;padding-block:18px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--s2);outline-offset:3px;border-radius:6px}
+.muted{color:var(--tx2)}
+.num{font-variant-numeric:tabular-nums}
+
+/* header: emblem, name, where you are, actions */
+.brand{display:flex;align-items:center;gap:14px 18px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.lockup{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
+.mark-box{width:92px;height:92px;flex:none;transition:width .3s var(--ease),height .3s var(--ease)}
+.inner .mark-box{width:60px;height:60px}
+.dtc-mark{display:block;width:100%;height:100%}
+.dtc-mark .spin{transform-box:view-box;transform-origin:0 0;animation:5s cubic-bezier(.455,.03,.515,.955) infinite alternate}
+.dtc-mark .ring-outer{animation-name:dtc-rot-90n}
+.dtc-mark .ring-3{animation-name:dtc-rot-360}
+.dtc-mark .ring-2{animation-name:dtc-rot-360n}
+.dtc-mark .ring-1,.dtc-mark .ring-green{animation-name:dtc-rot-180}
+.dtc-mark .cities{transform-box:view-box;transform-origin:0 0;animation:dtc-rot-360 40s linear infinite}
+.dtc-mark text{font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;font-weight:700}
+@keyframes dtc-rot-90n{to{transform:rotate(-90deg)}}
+@keyframes dtc-rot-180{to{transform:rotate(180deg)}}
+@keyframes dtc-rot-360{to{transform:rotate(360deg)}}
+@keyframes dtc-rot-360n{to{transform:rotate(-360deg)}}
+.name{color:var(--acc-ink);font-weight:600;font-size:13px;line-height:1.2}
+.name span{display:block}
+.divider{align-self:stretch;width:1px;background:var(--line);flex:none}
+.titles{flex:1 1 240px;min-width:0}
+h1{margin:0;font-size:clamp(20px,2.2vw,28px);font-weight:650;letter-spacing:-.015em;text-wrap:balance}
+h1 .acc{color:var(--acc-ink)}
+.sub{font-size:12.5px;color:var(--tx2)}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;border:1px solid var(--line-firm);background:var(--panel);border-radius:999px;height:34px;padding:0 14px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;color:var(--tx1);box-shadow:var(--shadow);text-decoration:none;
+  transition:transform .14s var(--ease),box-shadow .22s var(--ease),border-color .14s,color .14s}
+.btn:hover{border-color:var(--acc-line);color:var(--acc-ink);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.note{border:1px dashed var(--line-firm);border-radius:10px;padding:8px 12px;color:var(--tx2);font-size:12.5px;margin-bottom:20px}
+.lead{font-size:clamp(16px,1.5vw,19px);color:var(--tx1);max-width:68ch;margin:0 0 22px;text-wrap:pretty}
+
+/* the five doors */
+.doors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.door{grid-column:span 2;display:flex;flex-direction:column;gap:12px;min-width:0;text-decoration:none;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px 16px;
+  transition:transform .16s var(--ease),box-shadow .24s var(--ease),border-color .16s}
+.door.wide{grid-column:span 3}
+.door:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--acc-line)}
+.door:hover .go{color:var(--acc-ink)}.door:hover .go .icon{transform:translateX(4px)}
+.door-head{display:flex;align-items:center;gap:10px}
+.badge{width:36px;height:36px;border-radius:10px;background:var(--acc-weak);color:var(--acc-ink);display:grid;place-items:center;flex:none}
+.door h2{margin:0;font-size:18px;font-weight:650;letter-spacing:-.01em;flex:1;min-width:0}
+.ask{color:var(--tx2);margin:0;font-size:13.5px}
+.figure{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.figure b{font-size:clamp(30px,3.2vw,42px);font-weight:650;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
+.figure span{color:var(--tx2);font-size:13px}
+.door-body{display:grid;gap:12px;flex:1;align-content:start}
+.go{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--tx1);border-top:1px solid var(--line);padding-top:12px;transition:color .14s}
+.go .icon{transition:transform .2s var(--ease)}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;white-space:nowrap;flex:none}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.live{background:var(--acc-weak);color:var(--acc-ink)}
+.pill.ready{background:var(--s2-weak);color:var(--s2)}
+.pill.need{background:var(--warn-weak);color:var(--warn)}
+.pill.need::before{border-radius:1px;transform:rotate(45deg)}
+.facts{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.facts li{border:1px solid var(--line-firm);border-radius:999px;padding:3px 10px;font-size:12.5px;color:var(--tx1);background:var(--bg)}
+.facts b{font-weight:650;color:var(--tx)}
+.faces{display:flex;align-items:center}
+.faces img,.faces .more{width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 2px var(--panel);margin-left:-8px;object-fit:cover;background:var(--panel-2)}
+.faces img:first-child{margin-left:0}
+.faces .more{display:grid;place-items:center;font-size:12px;font-weight:650;color:var(--tx2)}
+.todo{display:grid;gap:6px;list-style:none;margin:0;padding:0}
+.todo li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line-firm);padding:3px 0;color:var(--tx1);font-size:13px}
+.todo li span:last-child{color:var(--tx2)}
+
+/* charts: thin bars, rounded data ends, values in text ink */
+.cols{display:flex;align-items:flex-end;gap:4px;height:var(--h,72px)}
+.col{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px;position:relative}
+.col .bar{width:min(100%,26px);border-radius:4px 4px 0 0;background:var(--acc);opacity:.55;min-height:2px}
+.col .bar.b2{background:var(--s2);border-radius:0}
+.col .bar.top{border-radius:4px 4px 0 0}.col .bar.base{border-radius:0}
+.col.last .bar,.cols.full .col .bar{opacity:1}
+.col .v{font-size:11px;color:var(--tx1);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.2}
+.col:hover .bar,.col:focus-visible .bar{opacity:1}
+.axis{display:flex;gap:4px;border-top:1px solid var(--line-firm);padding-top:3px;margin-top:0}
+.axis span{flex:1;min-width:0;text-align:center;font-size:11px;color:var(--tx2);white-space:nowrap;overflow:hidden}
+.rows{display:grid;gap:7px}
+.row{display:grid;grid-template-columns:minmax(0,var(--lab,42%)) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
+.row .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx1)}
+.row .track{height:8px;border-radius:0 4px 4px 0;background:transparent;border-left:1px solid var(--line-firm)}
+.row .track i{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--acc);min-width:2px}
+.row .val{font-variant-numeric:tabular-nums;color:var(--tx);font-weight:600;min-width:52px;text-align:right}
+.split{display:flex;gap:2px;height:10px}
+.split i{display:block;height:100%;background:var(--acc);border-radius:4px 0 0 4px;min-width:3px}
+.split i+i{background:var(--s2);border-radius:0 4px 4px 0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--tx1)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;background:var(--acc);display:inline-block}
+.legend i.b2{background:var(--s2)}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--panel);border:1px solid var(--line-firm);border-radius:10px;padding:7px 10px;
+  box-shadow:0 18px 40px -20px rgba(0,0,0,.6);font-size:12.5px;max-width:260px}
+.tip b{display:block;font-weight:650}
+.foot{margin-top:22px;font-size:12px;color:var(--tx2);max-width:90ch}
+
+/* second level */
+.back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--tx2);font-weight:600;margin-bottom:14px}
+.back:hover{color:var(--acc-ink)}
+.sec-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.sec-head h2{margin:0;font-size:clamp(22px,2.4vw,30px);font-weight:650;letter-spacing:-.02em}
+.sec-ask{font-size:16px;color:var(--tx1);margin:0 0 20px;max-width:70ch}
+h3{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--tx2);font-weight:650;margin:26px 0 10px}
+.inside{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.item{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel);text-decoration:none;min-width:0}
+a.item{box-shadow:var(--shadow);transition:transform .16s var(--ease),box-shadow .24s var(--ease),border-color .16s}
+a.item:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--acc-line)}
+.item.wait{border-style:dashed;background:transparent}
+.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.item b{font-size:15px;font-weight:650}
+.item p{margin:0;color:var(--tx2);font-size:13px}
+.item .open{color:var(--acc-ink);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:4px;margin-top:2px}
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow);padding:16px 18px;min-width:0;display:grid;gap:12px;align-content:start}
+.panel h4{margin:0;font-size:15px;font-weight:650}
+.panel .cap{margin:-8px 0 0;color:var(--tx2);font-size:12.5px}
+.dl{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.dl li{border:1px solid var(--line-firm);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--tx1);display:flex;align-items:center;gap:8px}
+@media (max-width:1000px){.door,.door.wide{grid-column:span 3}}
+@media (max-width:640px){.door,.door.wide{grid-column:1/-1}.mark-box{width:64px;height:64px}.divider{display:none}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+<!--/page-->
+</head>
+<body>
+<!--page-->
+<div id="app"></div>
+<script type="application/json" id="fp-data">{}</script>
+<script id="fp-app">
+(function () {
+  var D = JSON.parse(document.getElementById("fp-data").textContent);
+  var app = document.getElementById("app");
+  if (!D.chargeback) { app.textContent = "No data yet. Load a chargeback export with: python3 -m engine ingest chargeback <file>  then run: python3 -m engine build"; return; }
+  var HOSTED = !!(window.claude && window.claude.use), downloads = null;
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function h(tag, attrs, kids) {
+    var e = document.createElement(tag), k;
+    for (k in attrs || {}) {
+      if (k === "cls") e.className = attrs[k];
+      else if (k === "text") e.textContent = attrs[k];
+      else if (k === "style") e.style.cssText = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c != null) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function icon(paths) {
+    var s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("class", "icon"); s.setAttribute("aria-hidden", "true");
+    paths.forEach(function (d) { var p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("d", d); s.appendChild(p); });
+    return s;
+  }
+  var ARROW = ["M5 12h14", "M13 6l6 6-6 6"], BACK = ["M19 12H5", "M11 6l-6 6 6 6"];
+  function money(v) {
+    var a = Math.abs(v), cur = D.source.currency === "EUR" ? "€" : (D.source.currency || "") + " ";
+    if (a >= 1e6) return cur + (v / 1e6).toFixed(a >= 1e7 ? 1 : 2) + "M";
+    if (a >= 1e3) return cur + Math.round(v / 1e3) + "k";
+    return cur + Math.round(v);
+  }
+  function mon(m) { return MONTHS[+m.slice(5) - 1]; }
+  function monYear(m) { return mon(m) + " " + m.slice(0, 4); }
+  var cb = D.chargeback, pp = D.people, pr = D.projects, org = D.org;
+  var first = cb.months[0], last = cb.months[cb.months.length - 1];
+  var RANGE = mon(first) + " to " + monYear(last);
+  var hcLast = pp.headcount[pp.headcount.length - 1], hcNow = hcLast[0] + hcLast[1];
+
+  // ---- one floating tooltip for every chart mark
+  var tip = h("div", { cls: "tip", hidden: "" }); document.body.appendChild(tip);
+  function tipOn(el, title, lines) {
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("aria-label", title + ": " + lines.join(", "));
+    function show() {
+      tip.textContent = ""; tip.appendChild(h("b", { text: title }));
+      lines.forEach(function (l) { tip.appendChild(h("div", { text: l })); });
+      tip.hidden = false;
+      var r = el.getBoundingClientRect(), w = tip.offsetWidth;
+      tip.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + "px";
+      tip.style.top = Math.max(8, r.top - tip.offsetHeight - 8) + "px";
+    }
+    function hide() { tip.hidden = true; }
+    el.addEventListener("pointerenter", show); el.addEventListener("pointerleave", hide);
+    el.addEventListener("focus", show); el.addEventListener("blur", hide);
+  }
+
+  // ---- chart pieces
+  // Columns over time. series: one array of values, or two for a stack (first on the baseline).
+  function columns(months, series, opts) {
+    opts = opts || {};
+    var totals = months.map(function (_, i) { return series.reduce(function (a, s) { return a + s[i]; }, 0); });
+    var max = Math.max.apply(null, totals), peak = totals.indexOf(max);
+    var box = h("div"), cols = h("div", { cls: "cols" + (opts.full ? " full" : ""), style: "--h:" + (opts.height || 72) + "px" });
+    months.forEach(function (m, i) {
+      var c = h("div", { cls: "col" + (i === months.length - 1 ? " last" : "") });
+      var labelled = opts.labels === "all" || (opts.labels !== "none" && (i === months.length - 1 || (opts.labels === "ends" && (i === 0 || i === peak))));
+      if (labelled) c.appendChild(h("span", { cls: "v", text: opts.fmt(totals[i]) }));
+      for (var s = series.length - 1; s >= 0; s--) {
+        var pct = max ? series[s][i] / max * 84 : 0;
+        c.appendChild(h("div", { cls: "bar" + (s ? " b2" : "") + (series.length > 1 ? (s === series.length - 1 ? " top" : " base") : ""), style: "height:" + pct + "%" + (s < series.length - 1 ? ";margin-top:2px" : "") }));
+      }
+      tipOn(c, monYear(m), opts.tip ? opts.tip(i) : [opts.fmt(totals[i])]);
+      cols.appendChild(c);
+    });
+    box.appendChild(cols);
+    var ax = h("div", { cls: "axis" });
+    months.forEach(function (m, i) { ax.appendChild(h("span", { text: opts.axis === "ends" && i > 0 && i < months.length - 1 ? "" : mon(m) })); });
+    box.appendChild(ax);
+    return box;
+  }
+  function rows(list, fmt, lab) {
+    var max = Math.max.apply(null, list.map(function (x) { return x[1]; })), box = h("div", { cls: "rows", style: lab ? "--lab:" + lab : "" });
+    list.forEach(function (x) {
+      var r = h("div", { cls: "row" }, [h("span", { cls: "lab", text: x[0], title: x[0] }),
+        h("span", { cls: "track" }, [h("i", { style: "width:" + Math.max(0, x[1] / max * 100) + "%" })]), h("span", { cls: "val", text: fmt(x[1]) })]);
+      tipOn(r, x[0], [fmt(x[1])]);
+      box.appendChild(r);
+    });
+    return box;
+  }
+  function topWithOther(list, n) {
+    var top = list.slice(0, n), rest = list.slice(n).reduce(function (a, x) { return a + x[1]; }, 0);
+    return rest > 0 ? top.concat([[(list.length - n) + " others", rest]]) : top;
+  }
+  function split(a, b, la, lb) {
+    var box = h("div", { style: "display:grid;gap:6px" });
+    box.appendChild(h("div", { cls: "split", role: "img", "aria-label": la + " " + a + ", " + lb + " " + b }, [h("i", { style: "flex:" + a }), h("i", { style: "flex:" + b })]));
+    box.appendChild(h("div", { cls: "legend" }, [h("span", {}, [h("i"), la + " " + a]), h("span", {}, [h("i", { cls: "b2" }), lb + " " + b])]));
+    return box;
+  }
+  function pill(kind) { return h("span", { cls: "pill " + kind, text: { live: "Live", ready: "Data ready", need: "Needs data" }[kind] }); }
+  function count(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+  // ---- the five sections
+  var cbGrowth = Math.round((cb.monthly[cb.monthly.length - 1] / cb.monthly[0] - 1) * 100);
+  var SECTIONS = [
+    { id: "organization", name: "Organization", door: "Know your organization", status: "live", wide: true,
+      icon: ["M9 3h6v5H9z", "M3 16h6v5H3z", "M15 16h6v5h-6z", "M12 8v4", "M6 16v-4h12v4"],
+      ask: "Who are we, and who leads what?",
+      card: function () {
+        var faces = h("div", { cls: "faces" });
+        org.faces.forEach(function (src) { faces.appendChild(h("img", { src: src, alt: "" })); });
+        if (org.leaders > org.faces.length) faces.appendChild(h("span", { cls: "more", text: "+" + (org.leaders - org.faces.length) }));
+        return [h("div", { cls: "figure" }, [h("b", { text: String(org.leaders) }), h("span", { text: "leaders on the leadership chart, led by " + org.head.name })]),
+          faces,
+          h("ul", { cls: "facts" }, [fact(org.digitalCoes, "Digital CoEs"), fact(org.platformCoes, "Platform CoEs"), fact(org.erpTeams, "ERP teams"), fact(org.regions, "CIO regions")])];
+      },
+      inside: [
+        { name: "Leadership team", status: "live", href: D.links.leadership, text: "Domain leaders, digital leaders, CoE leaders and hubs on one chart. Click a person to see every role they hold. Editable, with HTML and PowerPoint download." },
+        { name: "Hubs and locations", status: "ready", text: "Where the teams sit and how many people work from each hub." },
+        { name: "Applications we support", status: "need", text: "A searchable catalog: owning CoE, users, criticality and health." },
+        { name: "Evolution of the organization", status: "need", text: "A timeline of hubs opening, programmes starting and the team growing." }],
+      downloads: ["Leadership chart as PowerPoint (works today)", "Leadership chart as HTML (works today)", "Application catalog as Excel"] },
+    { id: "chargeback", name: "Chargeback", door: "Chargeback", status: "live", wide: true, href: D.links.chargeback,
+      icon: ["M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18", "M15.5 8.5a4.5 4.5 0 1 0 0 7", "M7 10.8h6", "M7 13.2h6"],
+      ask: "What do we charge back, to whom, and how is it moving?",
+      card: function () {
+        return [h("div", { cls: "figure" }, [h("b", { text: money(cb.total) }), h("span", { text: "charged back, " + RANGE })]),
+          columns(cb.months, [cb.monthly], { fmt: money, height: 78, axis: "ends" }),
+          h("p", { cls: "ask", text: monYear(last) + " is " + (cbGrowth >= 0 ? "up " : "down ") + Math.abs(cbGrowth) + "% on " + mon(first) + "." })];
+      },
+      inside: [
+        { name: "By month", status: "ready", text: "The monthly trend, with what changed against the month before." },
+        { name: "By CoE", status: "ready", text: "Which competence centres the cost comes from." },
+        { name: "By project", status: "ready", text: "Every project charged, largest first, with hours and amount." },
+        { name: "By cost centre", status: "ready", text: cb.costCenters + " cost centres that receive the charge." },
+        { name: "By vendor", status: "ready", text: "External spend by supplier." },
+        { name: "Line detail", status: "ready", text: "Your existing chargeback page plugs in here: filters, row list and Excel download." }],
+      panels: function () {
+        return [panel("Charged back per month", RANGE + ", " + D.source.currency, columns(cb.months, [cb.monthly], { fmt: money, height: 190, labels: "ends", full: true })),
+          panel("By competence centre", "Largest eight, then the rest", rows(topWithOther(cb.byCoe, 8), money)),
+          panel("By function", "The part of the organization the work belongs to", rows(cb.byFunction, money)),
+          panel("By type", "Internal staff, external staff and other (travel, licences)", rows(cb.byType, money))];
+      },
+      downloads: ["Rows as Excel", "This view as HTML", "Monthly summary as PowerPoint"] },
+    { id: "operational-kpis", name: "Operational KPIs", door: "Operational KPIs", status: "need",
+      icon: ["M3 12h4l2.5-6 4 12 2.5-6h5"],
+      ask: "How well are we running the services we support?",
+      card: function () {
+        return [h("p", { cls: "ask", text: "No source connected yet. This is what the page is designed to show:" }),
+          h("ul", { cls: "todo" }, ["Incidents by priority", "Resolved within SLA", "Time to restore", "Availability"].map(function (t) { return h("li", {}, [h("span", { text: t }), h("span", { text: "to come" })]); }))];
+      },
+      inside: [
+        { name: "Incidents by priority", status: "need", text: "P1 to P4 opened and closed each month, by application." },
+        { name: "Resolved within SLA", status: "need", text: "Share of tickets closed inside target, against the target line." },
+        { name: "Time to restore", status: "need", text: "Mean time to restore service, by priority." },
+        { name: "Availability", status: "need", text: "Uptime of the business-critical applications." },
+        { name: "Change success", status: "need", text: "Changes delivered without incident or rollback." },
+        { name: "Backlog and ageing", status: "need", text: "Open tickets and how long they have waited." }],
+      downloads: ["Monthly KPI pack as PowerPoint", "Ticket extract as Excel"] },
+    { id: "projects", name: "Projects", door: "Projects", status: "ready",
+      icon: ["M4 4h6v16H4z", "M14 4h6v9h-6z"],
+      ask: "What are we delivering, and what does each project cost?",
+      card: function () {
+        return [h("div", { cls: "figure" }, [h("b", { text: count(pr.count) }), h("span", { text: "projects charged, " + RANGE })]),
+          rows(pr.top.slice(0, 3), money, "50%")];
+      },
+      inside: [
+        { name: "Project list and spend", status: "ready", text: "All " + pr.count + " projects with amount, hours and people, from chargeback." },
+        { name: "Status and RAG", status: "need", text: "Red, amber or green for each ongoing project, with the reason." },
+        { name: "Milestones", status: "need", text: "Phase, next milestone and due date on a timeline." },
+        { name: "Delivered per year", status: "need", text: "How many projects closed, by type and business unit." }],
+      panels: function () { return [panel("Largest projects by amount charged", RANGE, rows(pr.top, money, "46%"))]; },
+      downloads: ["Project list as Excel", "Portfolio status as PowerPoint"] },
+    { id: "people", name: "People", door: "People", status: "ready",
+      icon: ["M9 6a3 3 0 1 0 0 6a3 3 0 0 0 0-6", "M3 20a6 6 0 0 1 12 0", "M17 7.5a2.5 2.5 0 1 0 0 5", "M16.5 15a5 5 0 0 1 4.5 5"],
+      ask: "How many are we, where, and in which teams?",
+      card: function () {
+        return [h("div", { cls: "figure" }, [h("b", { text: count(hcNow) }), h("span", { text: "people charged time in " + monYear(last) })]),
+          split(hcLast[0], hcLast[1], "Internal", "External"),
+          h("p", { cls: "ask", text: pp.byPlace.length + " locations. " + pp.byPlace[0][0].split(",")[0] + " is the largest with " + pp.byPlace[0][1] + "." })];
+      },
+      inside: [
+        { name: "Headcount trend", status: "ready", text: "People charging time each month, internal and external." },
+        { name: "By location", status: "ready", text: "How many people work from each hub." },
+        { name: "By CoE", status: "ready", text: "Team sizes across the competence centres." },
+        { name: "Skills and roles", status: "need", text: "What the team can do: roles, skills and certifications." },
+        { name: "Joiners, leavers and open roles", status: "need", text: "Movement in and out, and positions being hired." }],
+      panels: function () {
+        var int = pp.headcount.map(function (x) { return x[0]; }), ext = pp.headcount.map(function (x) { return x[1]; });
+        var chart = h("div", { style: "display:grid;gap:10px" }, [h("div", { cls: "legend" }, [h("span", {}, [h("i"), "Internal"]), h("span", {}, [h("i", { cls: "b2" }), "External"])]),
+          columns(pp.months, [int, ext], { fmt: count, height: 190, labels: "ends", full: true, tip: function (i) { return ["Internal " + int[i], "External " + ext[i], "Total " + (int[i] + ext[i])]; } })]);
+        return [panel("People charging time per month", RANGE + ". " + count(pp.total) + " different people over the period.", chart),
+          panel("By location, " + monYear(last), "Where people who charged time are based", rows(pp.byPlace, count, "46%"))];
+      },
+      downloads: ["Headcount by month as Excel", "People summary as PowerPoint"] }
+  ];
+  function fact(n, label) { return h("li", {}, [h("b", { text: String(n) }), " " + label]); }
+  function panel(title, cap, body) { return h("section", { cls: "panel" }, [h("h4", { text: title }), h("p", { cls: "cap", text: cap }), body]); }
+
+  // ---- pages
+  function header(sec) {
+    var markBox = h("span", { cls: "mark-box" }); markBox.innerHTML = D.mark;       // the emblem ships inside this file's own data block
+    var name = h("span", { cls: "name" }, (D.source.org || "Digital Technology Centers").split(" ").map(function (w) { return h("span", { text: w }); }));
+    var title = h("h1", {}, sec ? ["Portal · ", h("span", { cls: "acc", text: sec.name })] : ["DTC ", h("span", { cls: "acc", text: "Portal" })]);
+    var save = h("button", { cls: "btn", type: "button", id: "save" }, [icon(["M12 4v11", "M7 10l5 5 5-5", "M5 20h14"]), "Download HTML"]);
+    save.hidden = HOSTED && !downloads;
+    save.addEventListener("click", saveFile);
+    var theme = h("button", { cls: "btn", type: "button", id: "theme" }, ["Switch theme"]);
+    theme.addEventListener("click", function () {
+      var root = document.documentElement, dark = root.dataset.theme ? root.dataset.theme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.theme = dark ? "light" : "dark";
+      try { localStorage.setItem("portal-theme", root.dataset.theme); } catch (e) {}
+    });
+    return h("header", { cls: "brand" + (sec ? " inner" : "") }, [h("a", { cls: "lockup", href: "#home", "aria-label": "Portal home" }, [markBox, name]),
+      h("span", { cls: "divider", "aria-hidden": "true" }),
+      h("div", { cls: "titles" }, [title, h("div", { cls: "sub", text: "Figures to " + monYear(last) + " · prepared " + (D.source.generated || "") })]),
+      h("div", { cls: "actions" }, [save, theme])]);
+  }
+  function home() {
+    var doors = h("nav", { cls: "doors", "aria-label": "Sections" });
+    SECTIONS.forEach(function (s) {
+      var to = { cls: "door" + (s.wide ? " wide" : ""), href: s.href || "#" + s.id };
+      if (/^https?:/.test(to.href)) { to.target = "_blank"; to.rel = "noopener"; }     // a published page opens beside this one
+      doors.appendChild(h("a", to, [
+        h("div", { cls: "door-head" }, [h("span", { cls: "badge" }, [icon(s.icon)]), h("h2", { text: s.door }), pill(s.status)]),
+        h("p", { cls: "ask", text: s.ask }),
+        h("div", { cls: "door-body" }, s.card()),
+        h("span", { cls: "go" }, ["Open " + s.name, icon(ARROW)])]));
+    });
+    return [h("p", { cls: "note", text: "Proposal mock. Cost, project and people figures are real, taken from the " + D.source.name + " extract (" + RANGE + "). Organization and Chargeback open working pages; sections marked Needs data are waiting for a source." }),
+      h("p", { cls: "lead", text: "Everything about the Digital Technology Centers in one place: who we are, what we cost, how we run, what we deliver and who does the work. Pick a section to go a level deeper." }),
+      doors,
+      h("p", { cls: "foot", text: "People are counted as everyone who charged time in the month; nobody is named on this page. Leaders are counted from the leadership chart." })];
+  }
+  function section(s) {
+    var out = [h("a", { cls: "back", href: "#home" }, [icon(BACK), "All sections"]),
+      h("div", { cls: "sec-head" }, [h("span", { cls: "badge" }, [icon(s.icon)]), h("h2", { text: s.name }), pill(s.status)]),
+      h("p", { cls: "sec-ask", text: s.ask })];
+    if (s.panels) { out.push(h("h3", { text: "Preview from your data" })); out.push(h("div", { cls: "panels" }, s.panels())); }
+    out.push(h("h3", { text: "What you can drill into" }));
+    out.push(h("div", { cls: "inside" }, s.inside.map(function (it) {
+      var kids = [h("div", { cls: "item-top" }, [h("b", { text: it.name }), pill(it.status)]), h("p", { text: it.text })];
+      if (it.href) {
+        kids.push(h("span", { cls: "open" }, ["Open", icon(ARROW)]));
+        var ext = /^https?:/.test(it.href);
+        return h("a", ext ? { cls: "item", href: it.href, target: "_blank", rel: "noopener" } : { cls: "item", href: it.href }, kids);
+      }
+      return h("div", { cls: "item" + (it.status === "need" ? " wait" : "") }, kids);
+    })));
+    out.push(h("h3", { text: "Downloads planned for this section" }));
+    out.push(h("ul", { cls: "dl" }, s.downloads.map(function (d) { return h("li", {}, [icon(["M12 4v11", "M7 10l5 5 5-5", "M5 20h14"]), d]); })));
+    return out;
+  }
+  function render() {
+    var id = (location.hash || "").replace(/^#/, ""), sec = SECTIONS.filter(function (s) { return s.id === id; })[0] || null;
+    tip.hidden = true;
+    app.textContent = "";
+    app.appendChild(h("div", { cls: "wrap" }, [header(sec)].concat(sec ? section(sec) : home())));
+    window.scrollTo(0, 0);
+  }
+
+  // ---- this page as one self-contained file
+  function saveFile() {
+    var html = '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<!--page-->\n' +
+      '<title>DTC Portal</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<style id="fp-style">' + document.getElementById("fp-style").textContent +
+      '</style>\n<!--/page-->\n</head>\n<body>\n<!--page-->\n<div id="app"></div>\n<script type="application/json" id="fp-data">' + JSON.stringify(D).replace(/</g, "\\u003c") +
+      '</' + 'script>\n<script id="fp-app">' + document.getElementById("fp-app").textContent + '</' + 'script>\n<!--/page-->\n</body>\n</html>\n';
+    if (downloads) { downloads.save({ filename: "dtc-portal.html", data: html }).catch(function () {}); return; }
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([html], { type: "text/html" })); a.download = "dtc-portal.html";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  }
+  if (HOSTED) window.claude.use("downloads").then(function (x) { if (x) { downloads = x; var b = document.getElementById("save"); if (b) b.hidden = false; } }, function () {});
+
+  try { var saved = localStorage.getItem("portal-theme"); if (saved && !document.documentElement.dataset.theme) document.documentElement.dataset.theme = saved; } catch (e) {}
+  window.addEventListener("hashchange", render);
+  render();
+})();
+</script>
+<!--/page-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+# This repository is public. It holds code only: no organization data, photos, figures or branding.
+# Everything in the first block is supplied locally and stays out of git. If the repository becomes
+# private and you want the data versioned, remove the lines in that block.
+
+# --- organization data (never in a public repo)
+data/*.json
+assets/people/*
+assets/brand/*
+site/
+sources/*
+!data/README.md
+!assets/people/README.md
+!assets/brand/README.md
+!sources/README.md
+
+# --- copies prepared for publishing
+.artifacts/
+
+# --- Claude Code, personal
+.claude/settings.local.json
+CLAUDE.local.md
+
+# --- secrets
+.env
+.env.*
+
+__pycache__/
+*.pyc
+.DS_Store

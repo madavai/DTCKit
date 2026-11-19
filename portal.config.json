@@ -1,0 +1,44 @@
+{
+  "title": "DTC Portal",
+  "pages": {
+    "index": {
+      "file": "site/index.html",
+      "artifactFile": "dtc-portal.html",
+      "artifact": "https://claude.ai/artifact/4RB6Thu48QzR3THKMZe9uS",
+      "capabilities": {
+        "downloads": true
+      }
+    },
+    "leadership": {
+      "file": "site/leadership.html",
+      "artifactFile": "dtc-leadership.html",
+      "artifact": "https://claude.ai/artifact/5mAdLe4Z85QJMRffvuDRtR",
+      "capabilities": {
+        "db": {
+          "rules": [
+            {
+              "path": "leadership",
+              "read": "view",
+              "write": "admin"
+            },
+            {
+              "path": "photos",
+              "read": "view",
+              "write": "admin"
+            }
+          ]
+        },
+        "user": {},
+        "downloads": true
+      }
+    },
+    "chargeback": {
+      "file": "site/chargeback.html",
+      "artifactFile": "dtc-chargeback.html",
+      "artifact": "https://claude.ai/artifact/MWJgXQX5F5THxYLaL5iZpn",
+      "capabilities": {
+        "downloads": true
+      }
+    }
+  }
+}
