@@ -78,10 +78,13 @@ A page whose data file is missing is built in its empty state.
 - **Never hand-edit a data block.** Change `data/` (or the adapter) and run the build.
 - **Only real data in pages.** Never invent figures. A section without a source shows an empty state
   that says what will appear. Statuses on the front page: Live, Data ready, Needs data.
-- **Person-level cost data stays out of `data/`.** Adapters aggregate: people are counted, never named, in
-  anything built from chargeback. Two pages name people, by the owner's decision: the leadership chart, and
-  `site/chargeback-detail.html`, which is the owner's own stand-alone chargeback page copied as it is (one
-  back link added). Do not publish the detail page as an artifact, or link it from one, unless asked.
+- **Every view goes from the highest level to the lowest.** The owner's rule for KPIs: keep the summary
+  and also the detail behind it. A view shows totals first, lets the viewer cut every panel by any
+  dimension, compare months where that makes sense, filter on every dimension (several values at once),
+  and reach the individual lines. Adapters therefore keep line-level rows (chargeback: one row per month,
+  resource, project and cost centre, with names and IDs); they do not aggregate detail away.
+- `site/chargeback-detail.html` is the owner's own stand-alone chargeback page, copied as it is (one back
+  link added). It is a separate file and is not part of the published artifact.
 - **The portal stays self-contained.** One HTML file, data and photos inside, no network needed.
   The only exception is the PowerPoint export, which loads PptxGenJS from jsDelivr on click.
 - **Keep the `<!--page-->` markers** in `shell.html`. The artifact step and "Download HTML" depend on them.

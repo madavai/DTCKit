@@ -10,9 +10,9 @@
      employee_type, location, country, management_scope_3, project_name,
      charged_cost_center, vendor, total_hours, amount_base).
 
-Only totals leave this script: amounts and hours are summed per
-month x COE x type x location x project x function, and people are counted,
-never named. Standard library only, so it runs anywhere Python 3.8+ runs.
+Every chargeback line is kept, down to the person: one row per
+month x person x project x cost centre (with CoE, type, location, function, vendor and manager),
+so the chargeback view can go from the total to a single line. Standard library only.
 """
 import collections
 import csv
@@ -78,7 +78,8 @@ def vendor_name(v):
 
 
 def build(meta, rows):
-    dims = {k: [] for k in ("coe", "type", "place", "project", "fn", "cc", "vendor")}
+    dims = {k: [] for k in ("coe", "type", "place", "project", "fn", "cc", "vendor", "person", "manager")}
+    person_ids = []          # the ID of each entry in dims["person"], same order
     index = {k: {} for k in dims}
 
     def ix(dim, value):
@@ -87,6 +88,16 @@ def build(meta, rows):
             index[dim][value] = len(dims[dim])
             dims[dim].append(value)
         return index[dim][value]
+
+    def person(r):
+        """One entry per person, keyed by ID so two people with the same name stay apart."""
+        pid, name = r.get("resource_ref_pid"), r.get("resource_pid")
+        key = pid or name or "No person (lump charge)"
+        if key not in index["person"]:
+            index["person"][key] = len(dims["person"])
+            dims["person"].append(name or key)
+            person_ids.append(pid or "")
+        return index["person"][key]
 
     groups = collections.defaultdict(lambda: [0.0, 0.0, set()])
     month_people = collections.defaultdict(lambda: {"Internal": set(), "External": set()})
@@ -105,7 +116,8 @@ def build(meta, rows):
                ix("project", r.get("project_name")),
                ix("fn", (r.get("management_scope_3") or "").split(" - ")[-1].strip() or None),   # "A - B - Name" -> "Name"
                ix("cc", r.get("charged_cost_center")),
-               ix("vendor", (vendor_name(r.get("vendor")) or "Vendor not named") if typ == "External" else "Not external"))
+               ix("vendor", (vendor_name(r.get("vendor")) or "Vendor not named") if typ == "External" else "Not external"),
+               person(r), ix("manager", r.get("resource_manager_pid") or "No manager given"))
         g = groups[key]
         g[0] += r.get("amount_base") or 0
         g[1] += r.get("total_hours") or 0
@@ -124,7 +136,7 @@ def build(meta, rows):
         if r.get("charged_cost_center"):
             cost_centers[r["charged_cost_center"]] += r.get("amount_base") or 0
 
-    out_rows = [list(k) + [round(v[0], 2), round(v[1], 1), len(v[2])]
+    out_rows = [list(k) + [round(v[0], 2), round(v[1], 1)]
                 for k, v in sorted(groups.items())]
     months = sorted({k[0] for k in groups})
     people = {m: [len(month_people[m]["Internal"]), len(month_people[m]["External"])] for m in months}
@@ -140,7 +152,8 @@ def build(meta, rows):
         },
         "months": months,
         "dims": dims,
-        "cols": ["month", "coe", "type", "place", "project", "fn", "cc", "vendor", "amount", "hours", "people"],
+        "personIds": person_ids,
+        "cols": ["month", "coe", "type", "place", "project", "fn", "cc", "vendor", "person", "manager", "amount", "hours"],
         "rows": out_rows,
         "headcount": people,
         "peopleTotal": len(everyone),

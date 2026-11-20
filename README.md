@@ -37,7 +37,7 @@ of the same page, with Back and Forward buttons and a trail of where you are in 
 |---|---|---|---|
 | Front page | `#home` | `templates/views/home.js` | Five sections, each with a headline figure and a second level |
 | Leadership team | `#leadership` | `templates/views/leadership.js` | Editable chart; PowerPoint download |
-| Chargeback overview | `#chargeback` | `templates/views/chargeback.js` | KPIs, trend, what moved, heatmap, click-to-filter; totals only |
+| Chargeback | `#chargeback` | `templates/views/chargeback.js` | From the total down to single lines: filters on every dimension, month comparison, break-down table, every line |
 | Chargeback line detail | separate file | the source page itself | Kept as `site/chargeback-detail.html` when the source is an HTML export |
 | Operational KPIs, Projects, People | on the front page | not built yet | Outlined on the front page |
 
@@ -89,5 +89,4 @@ templates; it is not needed to produce pages.
 ## What is committed
 
 Everything is committed unless the owner has marked it "do not push". Those items are listed in the
-DO NOT PUSH block at the top of `.gitignore`. The chargeback overview holds totals only; the
-line-detail page and the leadership chart name people.
+DO NOT PUSH block at the top of `.gitignore`. The chargeback view and the leadership chart name people.

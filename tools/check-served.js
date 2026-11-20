@@ -13,7 +13,7 @@ console.log('leadership tiles:',await p.locator('.stage .p').count(),'| Edit sho
 await p.click('#edit');await p.click('.matrix [data-person="anamika"]');await p.fill('.form label:nth-child(2) input','Anamika Test');await p.keyboard.press('Tab');await p.click('#commit');await p.waitForTimeout(700);
 console.log('status:',await p.textContent('#status'),'| stored docs:',await p.evaluate(()=>Object.keys(window.__db).join(',')));
 await p.click('#nav-back');await p.click('#nav-back');await p.waitForTimeout(200);await p.click('a.door[href="#chargeback"]');await p.waitForTimeout(400);
-console.log('chargeback tiles:',await p.locator('.tile').count(),'| line detail is a link:',await p.locator('a.detail').count());
-await p.click('#portal-save');await p.waitForTimeout(300);await p.locator('button',{hasText:'Download data (CSV)'}).click();await p.waitForTimeout(300);
+console.log('chargeback tiles:',await p.locator('.tile').count(),'| original page is a link:',await p.locator('a.detail').count());
+await p.click('#portal-save');await p.waitForTimeout(300);await p.locator('button',{hasText:'Download lines (CSV)'}).click();await p.waitForTimeout(300);
 console.log('saved through Claude:',await p.evaluate(()=>window.__saved.join(', ')),'| errors:',errs.join(' ; ')||'none');
 await b.close()})();

@@ -16,13 +16,14 @@ Every file carries a `source` block:
 
 ### `chargeback.json` (written by `engine/ingest/chargeback.py`)
 
-Totals only. No person is named.
+Line level: every chargeback line is kept, down to the resource.
 
 | Field | Meaning |
 |---|---|
 | `months` | Months covered, `YYYY-MM`, in order |
-| `dims` | Lookup lists: `coe`, `type` (Internal, External, Other), `place`, `project`, `fn` (function), `cc` (cost centre charged), `vendor` |
-| `cols`, `rows` | One row per month x CoE x type x place x project x function x cost centre x vendor: indexes into `dims`, then `amount`, `hours`, `people` (count). Read columns by name through `cols`; the list may grow |
+| `dims` | Lookup lists: `coe`, `type` (Internal, External, Other), `place`, `project`, `fn` (function), `cc` (cost centre charged), `vendor`, `person` (resource name), `manager` |
+| `personIds` | The ID of each entry in `dims.person`, same order (empty for lump charges with no person) |
+| `cols`, `rows` | One row per month x resource x project x cost centre (with CoE, type, place, function, vendor, manager): indexes into `dims`, then `amount`, `hours`. Read columns by name through `cols`; the list may grow |
 | `headcount` | Per month: `[internal, external]` people who charged time |
 | `peopleTotal` | Different people over the whole range |
 | `peopleByPlace` | Latest month: `[place, people]`, largest first |
